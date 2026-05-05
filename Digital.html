@@ -1,1582 +1,3075 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
 <title>Case Study — Digital Agency Redesign</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
+
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+
 <style>
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   :root {
+
     --blue: #3852B4;
+
     --blue-light: #eef0fb;
+
     --blue-mid: #c5cbee;
+
     --black: #000000;
+
     --white: #FFFFFF;
+
     --card: #F8F8F8;
+
     --text: #1a1a1a;
+
     --muted: #555;
+
     --border: #e8e8e8;
+
     --radius: 16px;
+
     --radius-sm: 8px;
+
     --transition: 0.28s cubic-bezier(0.4,0,0.2,1);
+
     --topbar-height: 64px;
+
   }
+
   html { scroll-behavior: smooth; overflow-x: hidden; }
+
   body {
+
     font-family: 'Roboto', sans-serif;
+
     background: var(--white);
+
     color: var(--text);
+
     line-height: 1.65;
+
     font-size: 16px;
+
     -webkit-font-smoothing: antialiased;
+
     overflow-x: hidden;
+
     max-width: 100%;
+
   }
+
   h1, h2, h3, h4 {
+
     font-family: 'Poppins', sans-serif;
+
     color: var(--blue);
+
     line-height: 1.2;
+
   }
+
   h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; }
+
   h2 { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 700; }
+
   h3 { font-size: clamp(1.1rem, 1.8vw, 1.35rem); font-weight: 600; }
+
   p  { color: var(--text); font-weight: 400; }
+
   .container {
+
     max-width: 1080px;
+
     width: 100%;
+
     margin: 0 auto;
+
     padding: 0 24px;
+
     box-sizing: border-box;
+
   }
+
   .page-wrapper {
+
     padding-top: calc(var(--topbar-height) + 8px);
+
     padding-bottom: 96px;
+
     max-width: 100%;
+
     overflow-x: hidden;
+
   }
+
   .top-bar {
+
     position: sticky;
+
     top: 0;
+
     z-index: 100;
+
     background: rgba(255,255,255,0.96);
+
     backdrop-filter: blur(12px);
+
     -webkit-backdrop-filter: blur(12px);
+
     border-bottom: 1px solid var(--border);
+
     padding: 12px 24px;
+
     height: var(--topbar-height);
+
     display: flex;
+
     align-items: center;
+
     max-width: 100%;
+
   }
+
   .top-bar-inner {
+
     max-width: 1080px;
+
     margin: 0 auto;
+
     width: 100%;
+
     display: flex;
+
     align-items: center;
+
     gap: 16px;
+
   }
+
   .back-btn {
+
     display: inline-flex;
+
     align-items: center;
+
     gap: 8px;
+
     padding: 9px 20px;
+
     border-radius: 999px;
+
     border: 1.5px solid var(--blue);
+
     background: transparent;
+
     color: var(--blue);
+
     font-family: 'Roboto', sans-serif;
+
     font-size: 14px;
+
     font-weight: 500;
+
     cursor: pointer;
+
     text-decoration: none;
+
     transition: background var(--transition), color var(--transition);
+
     white-space: nowrap;
+
     flex-shrink: 0;
+
   }
+
   .back-btn:hover {
+
     background: var(--blue);
+
     color: var(--white);
+
   }
+
   .back-btn svg {
+
     width: 15px; height: 15px;
+
     flex-shrink: 0;
+
     transition: transform var(--transition);
+
   }
+
   .back-btn:hover svg { transform: translateX(-3px); }
+
   .back-btn .back-label { display: inline; }
+
   .breadcrumb {
+
     font-size: 13px;
+
     color: var(--muted);
+
     display: flex;
+
     gap: 6px;
+
     align-items: center;
+
     flex-wrap: wrap;
+
     min-width: 0;
+
   }
+
   .breadcrumb span { color: var(--blue); font-weight: 500; }
+
   .confidentiality {
+
     background: var(--blue-light);
+
     border-left: 3px solid var(--blue);
+
     padding: 14px 20px;
+
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+
     margin: 40px 0 48px;
+
     font-size: 13.5px;
+
     color: var(--muted);
+
     line-height: 1.6;
+
     max-width: 100%;
+
     box-sizing: border-box;
+
   }
+
   .confidentiality strong { color: var(--blue); font-weight: 600; }
+
   .hero {
+
     padding: 48px 0 56px;
+
     border-bottom: 1px solid var(--border);
+
     margin-bottom: 56px;
+
   }
+
   .hero-meta {
+
     display: flex;
+
     gap: 8px;
+
     flex-wrap: wrap;
+
     margin-bottom: 20px;
+
   }
+
   .tag {
+
     display: inline-block;
+
     padding: 4px 14px;
+
     border-radius: 999px;
+
     background: var(--blue-light);
+
     color: var(--blue);
+
     font-size: 12px;
+
     font-weight: 600;
+
     letter-spacing: 0.04em;
+
     text-transform: uppercase;
+
   }
+
   .hero h1 { margin-bottom: 20px; }
+
   .hero-sub {
+
     font-size: clamp(1rem, 1.6vw, 1.15rem);
+
     color: var(--muted);
+
     max-width: 680px;
+
     margin-bottom: 40px;
+
   }
+
   .hero-image {
+
     width: 100%;
+
     max-width: 100%;
+
     border-radius: var(--radius);
+
     min-height: 240px;
+
     background: var(--blue-light);
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     border: 1px solid var(--blue-mid);
-    overflow: hidden;
+
     position: relative;
+
     box-sizing: border-box;
+
   }
+
   .hero-image .placeholder-label {
+
     font-family: 'Poppins', sans-serif;
+
     font-size: 15px;
+
     font-weight: 600;
+
     color: var(--blue);
+
     letter-spacing: 0.05em;
+
     opacity: 0.5;
+
     text-align: center;
+
     padding: 24px;
+
     position: absolute;
+
     top: 50%;
+
     left: 50%;
+
     transform: translate(-50%, -50%);
+
     width: 100%;
+
     pointer-events: none;
+
   }
+
   .hero-image img {
+
     display: block;
+
     width: 100%;
+
     max-width: 100%;
+
     max-height: 560px;
+
     height: auto;
+
     object-fit: contain;
+
     border-radius: var(--radius);
+
     margin: 0 auto;
+
     position: relative;
+
   }
+
   .hero-image img.loaded ~ .placeholder-label { display: none; }
+
   .img-placeholder {
+
     background: var(--blue-light);
+
     border: 1px dashed var(--blue-mid);
+
     border-radius: var(--radius);
+
     min-height: 200px;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     margin-top: 16px;
-    overflow: hidden;
+
     position: relative;
+
     max-width: 100%;
+
     box-sizing: border-box;
+
   }
+
   .img-placeholder .label {
+
     font-family: 'Poppins', sans-serif;
+
     font-size: 14px;
+
     font-weight: 600;
+
     color: var(--blue);
+
     opacity: 0.4;
+
     text-align: center;
+
     padding: 16px;
+
     position: absolute;
+
     top: 50%;
+
     left: 50%;
+
     transform: translate(-50%, -50%);
+
     width: 100%;
+
     pointer-events: none;
+
   }
+
   .img-placeholder img {
+
     display: block;
+
     width: 100%;
+
     max-width: 100%;
+
     max-height: 560px;
+
     height: auto;
+
     object-fit: contain;
+
     margin: 0 auto;
+
     border-radius: var(--radius-sm);
+
     position: relative;
+
   }
+
   .img-placeholder img.loaded ~ .label { display: none; }
+
   .carousel-slide {
+
     position: relative;
+
     min-width: 100%;
+
     height: 100%;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     background: var(--blue-light);
+
     overflow: hidden;
+
   }
+
   .carousel-slide img {
+
     display: block;
+
     position: absolute;
+
     inset: 0;
+
     width: 100%;
+
     height: 100%;
+
     object-fit: contain;
+
     margin: auto;
+
     max-width: 100%;
+
   }
+
   .carousel-slide img.loaded ~ .slide-placeholder { display: none; }
+
   .hero-image img:not(.loaded),
+
   .img-placeholder img:not(.loaded),
+
   .carousel-slide img:not(.loaded) {
+
     display: none;
+
   }
+
   .hero-image img.loaded,
+
   .img-placeholder img.loaded,
+
   .carousel-slide img.loaded {
+
     display: block;
+
   }
+
   .stats-grid {
+
     display: grid;
+
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+
     gap: 16px;
+
     margin-bottom: 56px;
+
   }
+
   .stat-card {
+
     background: var(--card);
+
     border-radius: var(--radius);
+
     padding: 24px;
+
     border: 1px solid var(--border);
+
     transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
+
   }
+
   .stat-card:hover {
+
     transform: translateY(-4px);
+
     box-shadow: 0 12px 32px rgba(56,82,180,0.1);
+
     background: var(--blue-light);
+
   }
+
   .stat-label {
+
     font-size: 11px;
+
     font-weight: 600;
+
     letter-spacing: 0.08em;
+
     text-transform: uppercase;
+
     color: var(--blue);
+
     margin-bottom: 8px;
+
   }
+
   .stat-value {
+
     font-family: 'Poppins', sans-serif;
+
     font-size: 1rem;
+
     font-weight: 700;
+
     color: var(--black);
+
   }
+
   .section { margin-bottom: 72px; }
+
   .section-header {
+
     display: flex;
+
     align-items: center;
+
     gap: 14px;
+
     margin-bottom: 28px;
+
   }
+
   .section-num {
+
     font-family: 'Poppins', sans-serif;
+
     font-size: 11px;
+
     font-weight: 800;
+
     color: var(--blue);
+
     background: var(--blue-light);
+
     border-radius: 6px;
+
     padding: 4px 10px;
+
     letter-spacing: 0.06em;
+
     text-transform: uppercase;
+
     white-space: nowrap;
+
   }
+
   .section-line {
+
     flex: 1;
+
     height: 1px;
+
     background: var(--border);
+
   }
+
   .card {
+
     background: var(--card);
+
     border-radius: var(--radius);
+
     padding: 32px;
+
     border: 1px solid var(--border);
+
     transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
+
     max-width: 100%;
+
     box-sizing: border-box;
+
   }
+
   .card:hover {
+
     transform: translateY(-4px);
+
     box-shadow: 0 16px 40px rgba(56,82,180,0.09);
+
     background: var(--blue-light);
+
   }
+
   .card h3 { margin-bottom: 12px; }
+
   .card h2 { margin-bottom: 12px; }
+
   .card p  { color: var(--muted); font-size: 15px; }
+
   .card-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
   .card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
   .card-grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+
   .styled-list {
+
     list-style: none;
+
     padding: 0;
+
     display: flex;
+
     flex-direction: column;
+
     gap: 10px;
+
   }
+
   .styled-list li {
+
     display: flex;
+
     align-items: flex-start;
+
     gap: 10px;
+
     font-size: 15px;
+
     color: var(--muted);
+
   }
+
   .styled-list li::before {
+
     content: '';
+
     width: 6px; height: 6px;
+
     border-radius: 50%;
+
     background: var(--blue);
+
     flex-shrink: 0;
+
     margin-top: 8px;
+
   }
+
   .problem-statement {
+
     background: var(--blue);
+
     color: var(--white);
+
     border-radius: var(--radius);
+
     padding: 40px;
+
     margin-bottom: 24px;
+
     box-sizing: border-box;
+
     max-width: 100%;
+
   }
+
   .problem-statement h2 { color: var(--white); margin-bottom: 16px; }
+
   .problem-statement p  { color: rgba(255,255,255,0.82); font-size: 15.5px; }
+
   .issue-card {
+
     background: var(--card);
+
     border-radius: var(--radius);
+
     padding: 24px;
+
     border: 1px solid var(--border);
+
     transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
+
     border-top: 3px solid var(--blue);
+
   }
+
   .issue-card:hover {
+
     transform: translateY(-4px);
+
     box-shadow: 0 12px 28px rgba(56,82,180,0.1);
+
     background: var(--blue-light);
+
   }
+
   .issue-card h3 { font-size: 1rem; margin-bottom: 10px; }
+
   .issue-card p  { font-size: 14px; color: var(--muted); }
+
   .split-2 {
+
     display: grid;
+
     grid-template-columns: 1fr 1fr;
+
     gap: 20px;
+
   }
+
   .carousel-wrap {
+
     background: var(--card);
+
     border-radius: var(--radius);
+
     border: 1px solid var(--border);
+
     overflow: hidden;
+
     margin-top: 16px;
+
     max-width: 100%;
+
     box-sizing: border-box;
+
   }
+
   .carousel {
+
     position: relative;
+
     aspect-ratio: 16/9;
+
     background: var(--blue-light);
+
     overflow: hidden;
+
     user-select: none;
+
     -webkit-user-select: none;
+
     max-width: 100%;
+
   }
+
   .carousel-track {
+
     display: flex;
+
     height: 100%;
+
     transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+
     will-change: transform;
+
   }
+
   .carousel-slide .slide-placeholder {
+
     text-align: center;
+
     padding: 32px;
+
     position: absolute;
+
     inset: 0;
+
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
+
     justify-content: center;
+
   }
+
   .slide-placeholder p {
+
     font-family: 'Poppins', sans-serif;
+
     font-size: 14px;
+
     font-weight: 600;
+
     color: var(--blue);
+
     opacity: 0.45;
+
   }
+
   .slide-placeholder .slide-icon {
+
     font-size: 40px;
+
     margin-bottom: 12px;
+
     opacity: 0.3;
+
   }
+
   .carousel-controls {
+
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
+
     padding: 14px 20px;
+
     border-top: 1px solid var(--border);
+
   }
+
   .carousel-btn {
+
     width: 44px; height: 44px;
+
     border-radius: 50%;
+
     border: 1.5px solid var(--blue);
+
     background: transparent;
+
     color: var(--blue);
+
     cursor: pointer;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     transition: background var(--transition), color var(--transition);
+
     flex-shrink: 0;
+
     touch-action: manipulation;
+
   }
+
   .carousel-btn:hover { background: var(--blue); color: var(--white); }
+
   .carousel-btn svg { width: 16px; height: 16px; }
+
   .carousel-dots {
+
     display: flex;
+
     gap: 6px;
+
     align-items: center;
+
     flex-wrap: wrap;
+
     justify-content: center;
+
   }
+
   .carousel-dot {
+
     width: 7px; height: 7px;
+
     border-radius: 50%;
+
     background: var(--blue-mid);
+
     cursor: pointer;
+
     transition: background var(--transition), transform var(--transition);
+
     padding: 6px;
+
     width: auto;
+
     height: auto;
+
     width: 7px;
+
     height: 7px;
+
   }
+
   .carousel-dot.active {
+
     background: var(--blue);
+
     transform: scale(1.3);
+
   }
+
   .carousel-counter {
+
     font-size: 13px;
+
     font-weight: 500;
+
     color: var(--muted);
+
   }
+
   .color-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+
   .color-swatch {
+
     border-radius: var(--radius-sm);
+
     overflow: hidden;
+
     border: 1px solid var(--border);
+
     flex: 1;
+
     min-width: 120px;
+
   }
+
   .swatch-block { height: 64px; }
+
   .swatch-info { padding: 10px 14px; background: var(--white); }
+
   .swatch-name { font-size: 13px; font-weight: 600; color: var(--text); }
+
   .swatch-hex  { font-size: 12px; color: var(--muted); }
+
   .font-row {
+
     display: grid;
+
     grid-template-columns: 1fr 1fr;
+
     gap: 16px;
+
   }
+
   .font-card {
+
     background: var(--card);
+
     border: 1px solid var(--border);
+
     border-radius: var(--radius);
+
     padding: 24px;
+
     transition: box-shadow var(--transition), transform var(--transition);
+
   }
+
   .font-card:hover {
+
     transform: translateY(-4px);
+
     box-shadow: 0 12px 28px rgba(56,82,180,0.1);
+
   }
+
   .font-label { font-size: 11px; font-weight: 600; color: var(--blue); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+
   .font-display-heading {
+
     font-family: 'Poppins', sans-serif;
+
     font-size: clamp(1.4rem, 3vw, 2rem);
+
     font-weight: 800;
+
     color: var(--black);
+
     line-height: 1.1;
+
   }
+
   .font-display-body {
+
     font-size: 15px;
+
     color: var(--muted);
+
     margin-top: 6px;
+
   }
+
   .ia-tree {
+
     display: flex;
+
     flex-direction: column;
+
     gap: 10px;
+
   }
+
   .ia-item {
+
     background: var(--card);
+
     border: 1px solid var(--border);
+
     border-radius: var(--radius-sm);
+
     padding: 14px 18px;
+
     display: flex;
+
     align-items: center;
+
     gap: 12px;
+
     font-size: 14.5px;
+
     font-weight: 500;
+
     transition: background var(--transition), transform var(--transition);
+
   }
+
   .ia-item:hover {
+
     background: var(--blue-light);
+
     transform: translateX(6px);
+
   }
+
   .ia-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
+
   .ia-item.child { margin-left: 24px; opacity: 0.8; }
+
   .ia-item.child .ia-dot { background: var(--blue-mid); }
+
   .flow-steps {
+
     display: flex;
+
     align-items: center;
+
     flex-wrap: wrap;
+
     gap: 8px;
+
     margin-top: 8px;
+
   }
+
   .flow-step {
+
     flex: 1;
+
     min-width: 130px;
+
     background: var(--card);
+
     border: 1px solid var(--border);
+
     border-radius: var(--radius);
+
     padding: 20px 16px;
+
     text-align: center;
+
     transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
+
     position: relative;
+
   }
+
   .flow-step:hover {
+
     transform: translateY(-4px);
+
     box-shadow: 0 12px 24px rgba(56,82,180,0.1);
+
     background: var(--blue-light);
+
   }
+
   .flow-step-num {
+
     font-family: 'Poppins', sans-serif;
+
     font-size: 22px;
+
     font-weight: 800;
+
     color: var(--blue-mid);
+
     line-height: 1;
+
     margin-bottom: 6px;
+
   }
+
   .flow-step-label {
+
     font-size: 13px;
+
     font-weight: 600;
+
     color: var(--text);
+
     line-height: 1.35;
+
   }
+
   .flow-arrow {
+
     color: var(--blue-mid);
+
     padding: 0 4px;
+
     font-size: 18px;
+
     flex-shrink: 0;
+
     line-height: 1;
+
   }
+
   .cs-grid {
+
     display: grid;
+
     grid-template-columns: 1fr 1fr;
+
     gap: 20px;
+
   }
+
   .cs-card {
+
     background: var(--card);
+
     border-radius: var(--radius);
+
     padding: 28px;
+
     border: 1px solid var(--border);
+
     transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
+
   }
+
   .cs-card:hover {
+
     transform: translateY(-4px);
+
     box-shadow: 0 12px 28px rgba(56,82,180,0.09);
+
     background: var(--blue-light);
+
   }
+
   .cs-card.challenges { border-top: 3px solid #e05252; }
+
   .cs-card.solutions  { border-top: 3px solid #3852B4; }
+
   .cs-title {
+
     font-family: 'Poppins', sans-serif;
+
     font-size: 1rem;
+
     font-weight: 700;
+
     margin-bottom: 18px;
+
   }
+
   .cs-card.challenges .cs-title { color: #c44444; }
+
   .cs-card.solutions  .cs-title { color: var(--blue); }
+
   .outcome-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+
   .outcome-card {
+
     background: var(--blue);
+
     border-radius: var(--radius);
+
     padding: 28px 24px;
+
     color: var(--white);
+
     text-align: center;
+
     transition: transform var(--transition), box-shadow var(--transition);
+
   }
+
   .outcome-card:hover {
+
     transform: translateY(-5px);
+
     box-shadow: 0 16px 32px rgba(56,82,180,0.3);
+
   }
+
   .outcome-card h3 { color: var(--white); margin-bottom: 10px; font-size: 1.1rem; }
+
   .outcome-card p  { color: rgba(255,255,255,0.75); font-size: 14px; }
+
   .closing-quote {
+
     text-align: center;
+
     padding: 56px 24px;
+
     border-top: 1px solid var(--border);
+
     margin-top: 16px;
+
   }
+
   .closing-quote blockquote {
+
     font-family: 'Poppins', sans-serif;
+
     font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+
     font-weight: 700;
+
     color: var(--blue);
+
     max-width: 680px;
+
     margin: 0 auto;
+
     line-height: 1.45;
+
     position: relative;
+
   }
+
   .closing-quote blockquote::before,
+
   .closing-quote blockquote::after {
+
     content: '"';
+
     font-size: 4rem;
+
     color: var(--blue-mid);
+
     font-family: Georgia, serif;
+
     line-height: 0;
+
     vertical-align: -0.4em;
+
     margin: 0 4px;
+
   }
+
   .learnings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+
   .learning-card {
+
     background: var(--card);
+
     border: 1px solid var(--border);
+
     border-radius: var(--radius);
+
     padding: 24px;
+
     transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
+
     border-bottom: 3px solid var(--blue);
+
   }
+
   .learning-card:hover {
+
     transform: translateY(-4px);
+
     box-shadow: 0 12px 24px rgba(56,82,180,0.1);
+
     background: var(--blue-light);
+
   }
+
   .learning-card p { font-size: 14.5px; color: var(--muted); }
+
   .future-list { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+
   .future-item {
+
     display: flex;
+
     align-items: center;
+
     gap: 16px;
+
     padding: 16px 20px;
+
     background: var(--card);
+
     border: 1px solid var(--border);
+
     border-radius: var(--radius-sm);
+
     font-size: 15px;
+
     font-weight: 500;
+
     transition: background var(--transition), transform var(--transition);
+
   }
+
   .future-item:hover { background: var(--blue-light); transform: translateX(6px); }
+
   .future-num {
+
     font-family: 'Poppins', sans-serif;
+
     font-size: 13px;
+
     font-weight: 800;
+
     color: var(--blue);
+
     width: 28px;
+
     height: 28px;
+
     border-radius: 50%;
+
     background: var(--blue-light);
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     flex-shrink: 0;
+
   }
+
   .conclusion {
+
     background: var(--blue-light);
+
     border-radius: var(--radius);
+
     padding: 40px;
+
     border: 1px solid var(--blue-mid);
+
     box-sizing: border-box;
+
     max-width: 100%;
+
   }
+
   .conclusion h2 { margin-bottom: 16px; }
+
   .conclusion p { font-size: 16px; color: var(--muted); line-height: 1.75; }
+
   .reveal {
+
     opacity: 0;
+
     transform: translateY(24px);
+
     transition: opacity 0.55s ease, transform 0.55s ease;
+
   }
+
   .reveal.visible {
+
     opacity: 1;
+
     transform: translateY(0);
+
+  }
+
+  img {
+
+    max-width: 100%;
+
+    height: auto;
+
+    display: block;
+
   }
 
   @media (max-width: 768px) {
+
     :root {
+
       --topbar-height: 60px;
+
     }
+
     html, body {
+
       overflow-x: hidden;
+
       max-width: 100%;
+
     }
+
     .reveal {
+
       opacity: 1;
+
       transform: translateY(0);
+
       visibility: visible;
+
     }
+
     .card-grid-2,
+
     .card-grid-3,
+
     .split-2,
+
     .cs-grid,
+
     .font-row {
+
       grid-template-columns: 1fr;
+
     }
+
     .font-row {
+
       display: grid;
+
       grid-template-columns: 1fr;
+
       height: auto;
+
       overflow: visible;
+
     }
+
     .font-card {
+
       display: block;
+
       height: auto;
+
       overflow: visible;
+
       opacity: 1;
+
       visibility: visible;
+
     }
+
     .color-row {
+
       display: flex;
+
       height: auto;
+
       overflow: visible;
+
     }
+
     .color-swatch {
+
       min-width: 0;
+
       flex: 1 1 40%;
+
       display: block;
+
       height: auto;
+
       overflow: visible;
+
     }
+
     .swatch-block {
+
       height: 64px;
+
     }
+
     .swatch-info {
+
       display: block;
+
       height: auto;
+
     }
+
     .img-placeholder {
+
       height: auto;
-      overflow: visible;
+
       min-height: 200px;
+
     }
+
     .card {
+
       height: auto;
+
       overflow: visible;
+
     }
+
     .section {
+
       height: auto;
+
       overflow: visible;
+
       display: block;
+
     }
+
     .problem-statement { padding: 28px 24px; }
+
     .card { padding: 24px; }
+
     .hero { padding: 32px 0 40px; margin-bottom: 40px; }
+
     .flow-steps { gap: 8px; flex-direction: column; }
+
     .flow-arrow { transform: rotate(90deg); }
+
     .closing-quote { padding: 40px 16px; }
+
     .conclusion { padding: 28px 24px; }
+
     .stats-grid { grid-template-columns: 1fr 1fr; }
+
     .outcome-grid { grid-template-columns: 1fr 1fr; }
+
     .hero-image img { max-width: 100%; height: auto; max-height: 380px; }
+
     .img-placeholder img { max-width: 100%; height: auto; max-height: 360px; }
+
     .section { margin-bottom: 48px; }
+
     .stats-grid { margin-bottom: 40px; }
+
     .confidentiality { margin: 24px 0 32px; }
+
     .container { padding: 0 16px; }
+
     .carousel-wrap { overflow: hidden; }
+
     .carousel { overflow: hidden; aspect-ratio: 16/9; }
+
     .closing-quote { padding-bottom: 16px; }
+
   }
 
   @media (max-width: 480px) {
+
     :root {
+
       --topbar-height: 56px;
+
     }
+
     html, body {
+
       overflow-x: hidden;
+
       max-width: 100%;
+
     }
+
     .stats-grid, .outcome-grid { grid-template-columns: 1fr; }
+
     .color-row { flex-direction: column; }
+
     h1 { font-size: 1.7rem; }
+
     .back-btn {
+
       padding: 0;
+
       width: 40px;
+
       height: 40px;
+
       border-radius: 50%;
+
       justify-content: center;
+
       gap: 0;
+
     }
+
     .back-btn .back-label { display: none; }
+
     .back-btn svg { width: 18px; height: 18px; }
+
     .container { padding: 0 16px; }
+
     .hero-image img { max-width: 100%; height: auto; max-height: 260px; }
+
     .img-placeholder img { max-width: 100%; height: auto; max-height: 240px; }
+
     .section { margin-bottom: 36px; }
+
     .card { padding: 20px; }
+
     .carousel { aspect-ratio: 4/3; }
+
     .ia-item.child { margin-left: 12px; }
+
   }
 
   @media (max-width: 360px) {
+
     .section-num { font-size: 10px; padding: 3px 8px; }
+
     .stat-value  { font-size: 0.9rem; }
+
     .card-grid-3 { grid-template-columns: 1fr; }
+
     .carousel { aspect-ratio: 1/1; }
+
   }
+
 </style>
+
 </head>
+
 <body>
+
 <header class="top-bar">
+
   <div class="top-bar-inner">
+
     <a class="back-btn" href="./index.html" onclick="history.back(); return true;" aria-label="Go back">
+
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
         <polyline points="15 18 9 12 15 6"></polyline>
+
       </svg>
+
       <span class="back-label">Back</span>
+
     </a>
+
   </div>
+
 </header>
 
 <main class="page-wrapper">
+
 <div class="container">
 
   <div class="confidentiality reveal">
+
     <strong>Confidentiality Note:</strong>&nbsp;
+
     Due to confidentiality and privacy agreements, the name and identifiable details of the client have been withheld. This case study focuses on the design process, problem-solving approach, and final outcomes while maintaining client anonymity.
+
   </div>
 
   <section class="hero reveal">
+
     <div class="hero-meta">
+
       <span class="tag">UI/UX Design</span>
+
       <span class="tag">Web Redesign</span>
+
       <span class="tag">Digital Agency</span>
+
     </div>
+
     <h1>Digital Agency Website Redesign</h1>
+
     <p class="hero-sub">A complete redesign focused on clarity, conversion, and a scalable multi-page design system for a full-service digital agency.</p>
+
     <div class="hero-image">
-      <img src="./Digital Agency/Digital mock.png" alt="Full website mockup" />
+
+      <img src="./Digital Agency/Digital mock.png" alt="Full website mockup" loading="lazy" decoding="async" />
+
       <div class="placeholder-label">Full Website Mockup<br>Add your image here</div>
+
     </div>
+
   </section>
 
   <div class="stats-grid reveal">
+
     <div class="stat-card">
+
       <div class="stat-label">Role</div>
+
       <div class="stat-value">UI/UX Designer</div>
+
     </div>
+
     <div class="stat-card">
+
       <div class="stat-label">Scope</div>
+
       <div class="stat-value">Full Website Redesign</div>
+
     </div>
+
     <div class="stat-card">
+
       <div class="stat-label">Pages Designed</div>
+
       <div class="stat-value">10+ Pages</div>
+
     </div>
+
     <div class="stat-card">
+
       <div class="stat-label">Services Covered</div>
+
       <div class="stat-value">6 Core Services</div>
+
     </div>
+
   </div>
 
   <section class="section reveal">
+
     <div class="section-header">
+
       <div class="section-num">01 — Overview</div>
+
       <div class="section-line"></div>
+
     </div>
+
     <div class="card">
+
       <h2>Project Overview</h2>
+
       <p style="margin-top:14px;margin-bottom:20px;">
+
         This project involved the complete redesign of a digital agency website offering services such as Social Media Marketing, Graphic Design, UI/UX Design, Web Development, Video Editing, and SEO.
+
       </p>
+
       <p>
+
         The objective was to create a modern, structured, and conversion-focused experience that clearly communicates the agency's value while improving usability and engagement.
+
       </p>
+
     </div>
+
   </section>
 
   <section class="section reveal">
+
     <div class="section-header">
+
       <div class="section-num">02 — Problem</div>
+
       <div class="section-line"></div>
+
     </div>
+
     <div class="problem-statement">
+
       <h2>Problem Statement</h2>
+
       <p style="margin-top:12px;">The existing website lacked clarity, structure, and visual consistency. Users struggled to navigate through services, understand offerings, and take action.</p>
+
     </div>
+
     <div class="card-grid-3">
+
       <div class="issue-card">
+
         <h3>Poor Navigation</h3>
+
         <p>Unclear hierarchy made it difficult for users to find services and content.</p>
+
       </div>
+
       <div class="issue-card">
+
         <h3>Weak Storytelling</h3>
+
         <p>Visual design failed to communicate the agency's expertise and value.</p>
+
       </div>
+
       <div class="issue-card">
+
         <h3>Low Trust</h3>
+
         <p>Lack of trust-building elements reduced credibility and confidence.</p>
+
       </div>
+
       <div class="issue-card">
+
         <h3>Inconsistent UI</h3>
+
         <p>Visual inconsistency across pages broke the user experience flow.</p>
+
       </div>
+
       <div class="issue-card">
+
         <h3>Low Conversions</h3>
+
         <p>Absence of strong CTAs and clear structure hurt conversion rates.</p>
+
       </div>
+
     </div>
+
   </section>
 
   <section class="section reveal">
+
     <div class="section-header">
+
       <div class="section-num">03 — Goals</div>
+
       <div class="section-line"></div>
+
     </div>
+
     <div class="split-2">
+
       <div class="card">
+
         <h3>Project Goals</h3>
+
         <ul class="styled-list" style="margin-top:12px;">
+
           <li>Improve overall user experience</li>
+
           <li>Create a clean and modern UI</li>
+
           <li>Establish strong visual hierarchy</li>
+
           <li>Design a scalable multi-page system</li>
+
           <li>Increase user engagement and conversions</li>
+
         </ul>
+
       </div>
+
       <div class="card">
+
         <h3>Target Audience</h3>
+
         <ul class="styled-list" style="margin-top:12px;">
+
           <li>Small to medium business owners</li>
+
           <li>Startups and entrepreneurs</li>
+
           <li>Personal brands</li>
+
           <li>Companies seeking digital growth services</li>
+
         </ul>
+
       </div>
+
     </div>
+
   </section>
 
   <section class="section reveal">
+
     <div class="section-header">
+
       <div class="section-num">04 — Research</div>
+
       <div class="section-line"></div>
+
     </div>
+
     <div class="split-2">
+
       <div class="card">
+
         <h3>Competitive Analysis</h3>
+
         <p style="margin-top:10px;margin-bottom:16px;">I analyzed multiple digital agency websites to understand patterns in layout, content structure, and user engagement strategies.</p>
+
         <ul class="styled-list">
+
           <li>Case studies build trust and credibility</li>
+
           <li>Minimal design improves readability</li>
+
           <li>Strong CTAs drive conversions</li>
+
           <li>Structured layouts reduce confusion</li>
+
         </ul>
+
       </div>
+
       <div class="card">
+
         <h3>Design Strategy</h3>
+
         <ul class="styled-list" style="margin-top:12px;">
+
           <li>Simplicity and clarity as core principles</li>
+
           <li>Structured content flow throughout pages</li>
+
           <li>Strong CTA placement strategy</li>
+
           <li>Modular and scalable design system</li>
+
         </ul>
+
       </div>
+
     </div>
+
   </section>
 
   <section class="section reveal">
+
     <div class="section-header">
+
       <div class="section-num">05 — Architecture</div>
+
       <div class="section-line"></div>
+
     </div>
+
     <h2 style="margin-bottom:24px;">Information Architecture</h2>
+
     <div class="ia-tree">
+
       <div class="ia-item"><div class="ia-dot"></div> Home / Landing Page</div>
+
       <div class="ia-item"><div class="ia-dot"></div> Services</div>
+
       <div class="ia-item child"><div class="ia-dot"></div> 6 Inner Service Pages</div>
+
       <div class="ia-item"><div class="ia-dot"></div> Case Studies</div>
+
       <div class="ia-item child"><div class="ia-dot"></div> Case Study Main Page</div>
+
       <div class="ia-item child"><div class="ia-dot"></div> Case Study Inner Pages</div>
+
       <div class="ia-item"><div class="ia-dot"></div> Blog</div>
+
       <div class="ia-item child"><div class="ia-dot"></div> Blog Main Page</div>
+
       <div class="ia-item child"><div class="ia-dot"></div> Blog Inner Pages</div>
+
       <div class="ia-item"><div class="ia-dot"></div> Contact Us</div>
+
       <div class="ia-item"><div class="ia-dot"></div> FAQ</div>
+
       <div class="ia-item"><div class="ia-dot"></div> Privacy Policy</div>
+
     </div>
+
   </section>
 
   <section class="section reveal">
+
     <div class="section-header">
+
       <div class="section-num">06 — Wireframes</div>
+
       <div class="section-line"></div>
+
     </div>
+
     <h2 style="margin-bottom:8px;">Wireframing</h2>
+
     <p style="color:var(--muted);margin-bottom:24px;font-size:15px;">Low-fidelity wireframes were created to define layout, structure, and content placement before moving to high-fidelity design.</p>
+
     <div class="carousel-wrap">
+
       <div class="carousel" id="carousel-wireframes">
+
         <div class="carousel-track" id="track-wireframes">
+
           <div class="carousel-slide">
-            <img src="./Digital Agency/Landing pg wireframe.jpeg" alt="Landing Page Wireframe" />
+
+            <img src="./Digital Agency/Landing pg wireframe.jpeg" alt="Landing Page Wireframe" loading="lazy" decoding="async" />
+
             <div class="slide-placeholder"><div class="slide-icon">&#9635;</div><p>Landing Page Wireframe</p></div>
+
           </div>
+
           <div class="carousel-slide">
-            <img src="./Digital Agency/case study page wireframe.jpeg" alt="Case Study Main Page Wireframe" />
+
+            <img src="./Digital Agency/case study page wireframe.jpeg" alt="Case Study Main Page Wireframe" loading="lazy" decoding="async" />
+
             <div class="slide-placeholder"><div class="slide-icon">&#9635;</div><p>Case Study Main Page Wireframe</p></div>
+
           </div>
+
           <div class="carousel-slide">
-            <img src="./Digital Agency/blog page wireframe.jpeg" alt="Blog Main Page Wireframe" />
+
+            <img src="./Digital Agency/blog page wireframe.jpeg" alt="Blog Main Page Wireframe" loading="lazy" decoding="async" />
+
             <div class="slide-placeholder"><div class="slide-icon">&#9635;</div><p>Blog Main Page Wireframe</p></div>
+
           </div>
+
           <div class="carousel-slide">
-            <img src="./Digital Agency/service page wireframe.jpeg" alt="Services Page Wireframe" />
+
+            <img src="./Digital Agency/service page wireframe.jpeg" alt="Services Page Wireframe" loading="lazy" decoding="async" />
+
             <div class="slide-placeholder"><div class="slide-icon">&#9635;</div><p>Services Page Wireframe</p></div>
+
           </div>
+
           <div class="carousel-slide">
-            <img src="./Digital Agency/contact page wireframe.jpeg" alt="Contact Us Page Wireframe" />
+
+            <img src="./Digital Agency/contact page wireframe.jpeg" alt="Contact Us Page Wireframe" loading="lazy" decoding="async" />
+
             <div class="slide-placeholder"><div class="slide-icon">&#9635;</div><p>Contact Us Page Wireframe</p></div>
+
           </div>
+
         </div>
+
       </div>
+
       <div class="carousel-controls">
+
         <button class="carousel-btn" onclick="prevSlide('wireframes')" aria-label="Previous slide">
+
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+
         </button>
+
         <div class="carousel-dots" id="dots-wireframes"></div>
+
         <div class="carousel-counter" id="counter-wireframes">1 / 5</div>
+
         <button class="carousel-btn" onclick="nextSlide('wireframes')" aria-label="Next slide">
+
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+
         </button>
+
       </div>
+
     </div>
+
   </section>
 
   <section class="section reveal">
+
     <div class="section-header">
+
       <div class="section-num">07 — Visual Design</div>
+
       <div class="section-line"></div>
+
     </div>
+
     <h2 style="margin-bottom:24px;">Visual Design System</h2>
+
     <div class="card" style="margin-bottom:20px;">
+
       <h3 style="margin-bottom:20px;">Color Palette</h3>
+
       <div class="color-row">
+
         <div class="color-swatch">
+
           <div class="swatch-block" style="background:#000000;"></div>
+
           <div class="swatch-info"><div class="swatch-name">Black</div><div class="swatch-hex">#000000</div></div>
+
         </div>
+
         <div class="color-swatch">
+
           <div class="swatch-block" style="background:#FFFFFF;border:1px solid #e8e8e8;"></div>
+
           <div class="swatch-info"><div class="swatch-name">White</div><div class="swatch-hex">#FFFFFF</div></div>
+
         </div>
+
         <div class="color-swatch">
+
           <div class="swatch-block" style="background:#004195;"></div>
+
           <div class="swatch-info"><div class="swatch-name">Blue (Primary)</div><div class="swatch-hex">#004195</div></div>
+
         </div>
+
         <div class="color-swatch">
+
           <div class="swatch-block" style="background:#FFC60B;"></div>
+
           <div class="swatch-info"><div class="swatch-name">Yellow (Accent)</div><div class="swatch-hex">#FFC60B</div></div>
+
         </div>
+
       </div>
+
     </div>
+
     <div class="font-row">
+
       <div class="font-card">
+
         <div class="font-label">Headings</div>
+
         <div class="font-display-heading" style="font-family:'Poppins',sans-serif;">Poppins</div>
+
         <div class="font-display-body">Bold — Clear — Modern</div>
+
       </div>
+
       <div class="font-card">
+
         <div class="font-label">Body</div>
+
         <div class="font-display-heading" style="font-family:'Roboto',sans-serif;font-size:1.5rem;">Roboto</div>
+
         <div class="font-display-body">Readable — Clean — Professional</div>
+
       </div>
+
     </div>
+
   </section>
 
   <section class="section reveal">
+
     <div class="section-header">
+
       <div class="section-num">08 — Key Screens</div>
+
       <div class="section-line"></div>
+
     </div>
+
     <h2 style="margin-bottom:24px;">Key Screens</h2>
 
     <div class="card" style="margin-bottom:28px;">
+
       <h3>Landing Page</h3>
+
       <p style="margin:10px 0 8px;color:var(--muted);font-size:15px;">
+
         The Landing Page serves as the primary entry point for the digital agency, designed to capture attention and communicate value within seconds. It addresses the user&#x2019;s immediate need to understand what the agency does, who it serves, and why they should engage &#x2014; driving them toward a clear next action.
+
       </p>
+
       <h4 style="margin:20px 0 10px;color:var(--blue);font-size:0.95rem;font-weight:700;letter-spacing:0.03em;">Key Features / Elements</h4>
+
       <ul class="styled-list" style="margin-bottom:20px;">
+
         <li>Hero section with a compelling headline, sub-headline, and a primary CTA button</li>
+
         <li>Service highlights grid showcasing the six core offerings of the digital agency</li>
+
         <li>Featured case study previews to build credibility and demonstrate results</li>
+
         <li>Trust indicators: client logos, testimonials, or key statistics</li>
+
         <li>Secondary CTA section encouraging users to get in touch or explore services</li>
+
         <li>Sticky navigation for seamless access to all site sections</li>
+
       </ul>
+
       <h4 style="margin:0 0 10px;color:var(--blue);font-size:0.95rem;font-weight:700;letter-spacing:0.03em;">Design Decisions / Pillars</h4>
+
       <ul class="styled-list" style="margin-bottom:20px;">
+
         <li><strong>Hierarchy:</strong> Bold headline first, supporting copy second, CTA last - guides the eye naturally down the page</li>
+
         <li><strong>Clarity:</strong> Each section communicates a single idea, avoiding cognitive overload</li>
+
         <li><strong>Conversion:</strong> Above-the-fold CTA placement ensures the primary action is always visible</li>
+
         <li><strong>Trust:</strong> Social proof elements are strategically placed to reduce hesitation before scrolling</li>
+
       </ul>
+
       <div class="img-placeholder">
-        <img src="./Digital Agency/Landing page ND.png" alt="Landing Page" />
+
+        <img src="./Digital Agency/Landing page ND.png" alt="Landing Page" loading="lazy" decoding="async" />
+
         <div class="label">[Insert Landing Page Image Here]</div>
+
       </div>
+
     </div>
 
     <div class="card" style="margin-bottom:28px;">
+
       <h3>Services Page</h3>
+
       <p style="margin:10px 0 8px;color:var(--muted);font-size:15px;">
+
         The Services Page provides a structured overview of every offering available from the digital agency. It solves the user problem of not knowing the full scope of services on offer, allowing them to quickly identify which solution fits their business need and navigate deeper into individual service details.
+
       </p>
+
       <h4 style="margin:20px 0 10px;color:var(--blue);font-size:0.95rem;font-weight:700;letter-spacing:0.03em;">Key Features / Elements</h4>
+
       <ul class="styled-list" style="margin-bottom:20px;">
+
         <li>Service cards grid displaying all six core services with icons, titles, and brief descriptions</li>
+
         <li>Individual inner pages for each service with detailed scope, deliverables, and process</li>
+
         <li>Consistent CTA on each inner page directing users to the Contact page</li>
+
         <li>Visual differentiation between services using iconography and color accents</li>
+
         <li>Breadcrumb navigation to maintain context across inner service pages</li>
+
       </ul>
+
       <h4 style="margin:0 0 10px;color:var(--blue);font-size:0.95rem;font-weight:700;letter-spacing:0.03em;">Design Decisions / Pillars</h4>
+
       <ul class="styled-list" style="margin-bottom:20px;">
+
         <li><strong>Scannability:</strong> Card-based layout allows users to compare services at a glance without heavy reading</li>
+
         <li><strong>Depth on demand:</strong> Inner pages provide full detail only for users who want it, reducing overwhelm</li>
+
         <li><strong>Conversion:</strong> Each service page ends with a direct CTA to drive enquiries while intent is highest</li>
+
         <li><strong>Consistency:</strong> Shared layout template across all inner pages maintains visual cohesion</li>
+
       </ul>
+
       <div class="img-placeholder">
-        <img src="./Digital Agency/sp.png" alt="Services Page" />
+
+        <img src="./Digital Agency/sp.png" alt="Services Page" loading="lazy" decoding="async" />
+
         <div class="label">[Insert Services Page Image Here]</div>
+
       </div>
+
     </div>
 
     <div class="card" style="margin-bottom:28px;">
+
       <h3>Blog Page (Main)</h3>
+
       <p style="margin:10px 0 8px;color:var(--muted);font-size:15px;">
+
         The Blog Main Page acts as a content hub for the digital agency, surfacing articles, guides, and industry insights. It addresses the user's need to stay informed and explore the agency's expertise, while also supporting SEO goals and organic discovery.
+
       </p>
+
       <h4 style="margin:20px 0 10px;color:var(--blue);font-size:0.95rem;font-weight:700;letter-spacing:0.03em;">Key Features / Elements</h4>
+
       <ul class="styled-list" style="margin-bottom:20px;">
+
         <li>Featured blog post hero at the top with a thumbnail, headline, and excerpt</li>
+
         <li>Blog listing grid with article cards showing category tag, title, date, and read time</li>
+
         <li>Category filter or tag navigation for easy content discovery</li>
+
         <li>Search functionality to allow users to locate specific topics quickly</li>
+
         <li>Pagination or infinite scroll for managing large content archives</li>
+
       </ul>
+
       <h4 style="margin:0 0 10px;color:var(--blue);font-size:0.95rem;font-weight:700;letter-spacing:0.03em;">Design Decisions / Pillars</h4>
+
       <ul class="styled-list" style="margin-bottom:20px;">
+
         <li><strong>Discoverability:</strong> Category tags and filters reduce friction in finding relevant content</li>
+
         <li><strong>Visual hierarchy:</strong> The featured post draws attention first, followed by the supporting grid</li>
+
         <li><strong>Authority:</strong> Consistent branding and quality formatting reinforces the agency's credibility as a thought leader</li>
+
         <li><strong>Engagement:</strong> Clear read-time indicators help users self-select articles that fit their available time</li>
+
       </ul>
+
       <div class="img-placeholder">
-        <img src="./Digital Agency/Blog page ND.png" alt="Blog Page Main" />
+
+        <img src="./Digital Agency/Blog page ND.png" alt="Blog Page Main" loading="lazy" decoding="async" />
+
         <div class="label">[Insert Blog Page (Main) Image Here]</div>
+
       </div>
+
     </div>
 
     <div class="card" style="margin-bottom:28px;">
+
       <h3>Blog Page (Inner)</h3>
+
       <p style="margin:10px 0 8px;color:var(--muted);font-size:15px;">
+
         The Blog Inner Page delivers the full reading experience for individual articles. It solves the user's need for focused, distraction-free content consumption while keeping them engaged with the broader site through related content and contextual CTAs.
+
       </p>
+
       <h4 style="margin:20px 0 10px;color:var(--blue);font-size:0.95rem;font-weight:700;letter-spacing:0.03em;">Key Features / Elements</h4>
+
       <ul class="styled-list" style="margin-bottom:20px;">
+
         <li>Article hero with a cover image, title, author name, date, and category tag</li>
+
         <li>Readable body content with proper typographic hierarchy using headings and paragraph spacing</li>
+
         <li>Sticky table of contents sidebar (desktop) for long-form navigation</li>
+
         <li>Related articles section at the bottom to encourage continued reading</li>
+
         <li>CTA block within or at the end of the article to capture interested readers</li>
+
       </ul>
+
       <h4 style="margin:0 0 10px;color:var(--blue);font-size:0.95rem;font-weight:700;letter-spacing:0.03em;">Design Decisions / Pillars</h4>
+
       <ul class="styled-list" style="margin-bottom:20px;">
+
         <li><strong>Readability:</strong> Optimised line length, font size, and spacing ensure a comfortable reading experience</li>
+
         <li><strong>Retention:</strong> Related articles reduce exit rates by surfacing relevant next reads</li>
+
         <li><strong>Conversion:</strong> Inline CTA blocks capture leads when user interest is at its peak</li>
+
         <li><strong>Clarity:</strong> Minimal distractions keep focus on the content itself</li>
+
       </ul>
+
       <div class="img-placeholder">
-        <img src="./Digital Agency/Blog  inner Page  ND.png" alt="Blog Page Inner" />
+
+        <img src="./Digital Agency/Blog  inner Page  ND.png" alt="Blog Page Inner" loading="lazy" decoding="async" />
+
         <div class="label">[Insert Blog Page (Inner) Image Here]</div>
+
       </div>
+
     </div>
 
     <div class="card" style="margin-bottom:28px;">
+
       <h3>Case Study Page (Main)</h3>
+
       <p style="margin:10px 0 8px;color:var(--muted);font-size:15px;">
+
         The Case Study Main Page aggregates all completed work for the digital agency into a browsable portfolio. It directly addresses the prospective client's need to evaluate past performance, industry experience, and the calibre of results delivered before making a contact decision.
+
       </p>
+
       <h4 style="margin:20px 0 10px;color:var(--blue);font-size:0.95rem;font-weight:700;letter-spacing:0.03em;">Key Features / Elements</h4>
+
       <ul class="styled-list" style="margin-bottom:20px;">
+
         <li>Case study cards with project thumbnail, client industry, service type, and headline result</li>
+
         <li>Filter tabs by service category to help users find relevant work quickly</li>
+
         <li>Outcome metrics displayed prominently on each card to communicate impact at a glance</li>
+
         <li>Clean grid layout that scales to accommodate a growing portfolio</li>
+
         <li>Page-level CTA encouraging users to discuss their own project</li>
+
       </ul>
+
       <h4 style="margin:0 0 10px;color:var(--blue);font-size:0.95rem;font-weight:700;letter-spacing:0.03em;">Design Decisions / Pillars</h4>
+
       <ul class="styled-list" style="margin-bottom:20px;">
+
         <li><strong>Trust:</strong> Displaying real results up front on cards reduces the need for users to dig for proof</li>
+
         <li><strong>Relevance:</strong> Filtering by service type ensures users see the work most applicable to their needs</li>
+
         <li><strong>Scalability:</strong> Grid-based layout allows new case studies to be added without restructuring the page</li>
+
         <li><strong>Conversion:</strong> Strong page-level CTA capitalises on the trust built by browsing the portfolio</li>
+
       </ul>
+
       <div class="img-placeholder">
-        <img src="./Digital Agency/Case studies page ND.png" alt="Case Study Page Main" />
+
+        <img src="./Digital Agency/Case studies page ND.png" alt="Case Study Page Main" loading="lazy" decoding="async" />
+
         <div class="label">[Insert Case Study Page (Main) Image Here]</div>
+
       </div>
+
     </div>
 
     <div class="card" style="margin-bottom:28px;">
+
       <h3>Case Study Page (Inner)</h3>
+
       <p style="margin:10px 0 8px;color:var(--muted);font-size:15px;">
+
         Each Case Study Inner Page tells the complete story of a single project from problem to process to measurable outcome. It serves users who want to thoroughly evaluate how the digital agency approaches challenges before committing to an enquiry.
+
       </p>
+
       <h4 style="margin:20px 0 10px;color:var(--blue);font-size:0.95rem;font-weight:700;letter-spacing:0.03em;">Key Features / Elements</h4>
+
       <ul class="styled-list" style="margin-bottom:20px;">
+
         <li>Project hero with overview stats: industry, service type, timeline, and key result</li>
+
         <li>Structured narrative flow: Problem to Research to Solution to Results</li>
+
         <li>Visual showcases of deliverables: mockups, screenshots, or before/after comparisons</li>
+
         <li>Quantified outcome metrics displayed in a highlight card or stat grid</li>
+
         <li>Navigation to previous/next case studies and a closing CTA</li>
+
       </ul>
+
       <h4 style="margin:0 0 10px;color:var(--blue);font-size:0.95rem;font-weight:700;letter-spacing:0.03em;">Design Decisions / Pillars</h4>
+
       <ul class="styled-list" style="margin-bottom:20px;">
+
         <li><strong>Storytelling:</strong> A linear narrative structure mirrors how readers naturally process information: context, journey, resolution</li>
+
         <li><strong>Credibility:</strong> Real data and visual deliverables validate claims more effectively than descriptive text alone</li>
+
         <li><strong>Usability:</strong> Clear section headers allow readers to skim to the parts most relevant to their evaluation</li>
+
         <li><strong>Conversion:</strong> A closing CTA placed after results is positioned at peak persuasion</li>
+
       </ul>
+
       <div class="img-placeholder">
-        <img src="./Digital Agency/Case study inner ND.png" alt="Case Study Page Inner" />
+
+        <img src="./Digital Agency/Case study inner ND.png" alt="Case Study Page Inner" loading="lazy" decoding="async" />
+
         <div class="label">[Insert Case Study Page (Inner) Image Here]</div>
+
       </div>
+
     </div>
 
     <div class="card" style="margin-bottom:20px;">
+
       <h3>Contact Us Page</h3>
+
       <p style="margin:10px 0 8px;color:var(--muted);font-size:15px;">
+
         The Contact Us Page is the final conversion touchpoint, bridging the user's interest and the agency's first response. It solves the friction of reaching out by making the process intuitive, low-effort, and reassuring, ensuring qualified leads are not lost at the final step.
+
       </p>
+
       <h4 style="margin:20px 0 10px;color:var(--blue);font-size:0.95rem;font-weight:700;letter-spacing:0.03em;">Key Features / Elements</h4>
+
       <ul class="styled-list" style="margin-bottom:20px;">
+
         <li>Short, focused contact form: name, email, service of interest, and message fields</li>
+
         <li>Clear headline and supporting copy to reassure users before they submit</li>
+
         <li>Contact details section: email address, phone number (if applicable), and social links</li>
+
         <li>Response time expectation to build confidence and reduce post-submission anxiety</li>
+
         <li>Optional: embedded map or location reference if the agency has a physical presence</li>
+
       </ul>
+
       <h4 style="margin:0 0 10px;color:var(--blue);font-size:0.95rem;font-weight:700;letter-spacing:0.03em;">Design Decisions / Pillars</h4>
+
       <ul class="styled-list" style="margin-bottom:20px;">
+
         <li><strong>Simplicity:</strong> A minimal form with only essential fields reduces submission friction and increases completion rates</li>
+
         <li><strong>Trust:</strong> Setting a clear response expectation removes uncertainty and encourages users to follow through</li>
+
         <li><strong>Accessibility:</strong> Proper label alignment, input sizing, and error states ensure the form works for all users</li>
+
         <li><strong>Conversion focus:</strong> No competing links or distractions on the page; the single goal is form submission</li>
+
       </ul>
+
       <div class="img-placeholder">
-        <img src="./Digital Agency/Contact us page ND.png" alt="Contact Us Page" />
+
+        <img src="./Digital Agency/Contact us page ND.png" alt="Contact Us Page" loading="lazy" decoding="async" />
+
         <div class="label">[Insert Contact Us Page Image Here]</div>
+
       </div>
+
     </div>
+
   </section>
 
   <section class="section reveal">
+
     <div class="section-header">
+
       <div class="section-num">09 — User Flow</div>
+
       <div class="section-line"></div>
+
     </div>
+
     <h2 style="margin-bottom:24px;">User Flow</h2>
+
     <div class="flow-steps">
+
       <div class="flow-step">
+
         <div class="flow-step-num">01</div>
+
         <div class="flow-step-label">Lands on Homepage</div>
+
       </div>
+
       <div class="flow-arrow">&#8594;</div>
+
       <div class="flow-step">
+
         <div class="flow-step-num">02</div>
+
         <div class="flow-step-label">Explores Services</div>
+
       </div>
+
       <div class="flow-arrow">&#8594;</div>
+
       <div class="flow-step">
+
         <div class="flow-step-num">03</div>
+
         <div class="flow-step-label">Views Case Studies</div>
+
       </div>
+
       <div class="flow-arrow">&#8594;</div>
+
       <div class="flow-step">
+
         <div class="flow-step-num">04</div>
+
         <div class="flow-step-label">Builds Trust</div>
+
       </div>
+
       <div class="flow-arrow">&#8594;</div>
+
       <div class="flow-step">
+
         <div class="flow-step-num">05</div>
+
         <div class="flow-step-label">Contacts Agency</div>
+
       </div>
+
     </div>
+
     <div class="img-placeholder" style="margin-top:24px;aspect-ratio:21/6;min-height:120px;">
-      <img src="./Digital Agency/user flow digital agnecy.png" alt="User Flow Diagram" />
+
+      <img src="./Digital Agency/user flow digital agnecy.png" alt="User Flow Diagram" loading="lazy" decoding="async" />
+
       <div class="label">User Flow Diagram</div>
+
     </div>
+
   </section>
 
   <section class="section reveal">
+
     <div class="section-header">
+
       <div class="section-num">10 — Challenges</div>
+
       <div class="section-line"></div>
+
     </div>
+
     <div class="cs-grid">
+
       <div class="cs-card challenges">
+
         <div class="cs-title">Challenges</div>
+
         <ul class="styled-list">
+
           <li>Managing multiple pages without clutter</li>
+
           <li>Maintaining visual consistency throughout</li>
+
           <li>Balancing aesthetics and usability</li>
+
           <li>Structuring large amounts of content</li>
+
         </ul>
+
       </div>
+
       <div class="cs-card solutions">
+
         <div class="cs-title">Solutions</div>
+
         <ul class="styled-list">
+
           <li>Modular design system with reusable patterns</li>
+
           <li>Clear visual hierarchy across all pages</li>
+
           <li>Reusable components for consistency</li>
+
           <li>Consistent spacing and grid usage</li>
+
         </ul>
+
       </div>
+
     </div>
+
   </section>
 
   <section class="section reveal">
+
     <div class="section-header">
+
       <div class="section-num">11 — Outcomes</div>
+
       <div class="section-line"></div>
+
     </div>
+
     <div class="outcome-grid">
+
       <div class="outcome-card">
+
         <h3>Improved Usability</h3>
+
         <p>Clearer navigation and structured layout made it easier for users to find what they need.</p>
+
       </div>
+
       <div class="outcome-card">
+
         <h3>Better Engagement</h3>
+
         <p>Compelling visual storytelling increased time on site and reduced drop-offs.</p>
+
       </div>
+
       <div class="outcome-card">
+
         <h3>Increased Trust</h3>
+
         <p>Case studies and consistent UI built credibility with potential clients.</p>
+
       </div>
+
       <div class="outcome-card">
+
         <h3>Higher Conversions</h3>
+
         <p>Strategic CTA placement and clear value communication improved conversion rate.</p>
+
       </div>
+
     </div>
+
   </section>
 
   <section class="section reveal">
+
     <div class="section-header">
+
       <div class="section-num">12 — Learnings</div>
+
       <div class="section-line"></div>
+
     </div>
+
     <div class="learnings-grid">
+
       <div class="learning-card">
+
         <h3>Clarity Over Complexity</h3>
+
         <p style="margin-top:10px;">Simpler, clearer design always outperforms complex aesthetics for service-based sites.</p>
+
       </div>
+
       <div class="learning-card">
+
         <h3>Structure Improves UX</h3>
+
         <p style="margin-top:10px;">A well-defined information architecture reduces user confusion and improves satisfaction.</p>
+
       </div>
+
       <div class="learning-card">
+
         <h3>Case Studies Build Trust</h3>
+
         <p style="margin-top:10px;">Showing real work and process is one of the strongest trust signals for agencies.</p>
+
       </div>
+
       <div class="learning-card">
+
         <h3>Consistency Builds Professionalism</h3>
+
         <p style="margin-top:10px;">A design system ensures every page feels intentional and cohesive across the entire site.</p>
+
       </div>
+
     </div>
+
   </section>
 
   <section class="section reveal">
+
     <div class="section-header">
+
       <div class="section-num">13 — Future</div>
+
       <div class="section-line"></div>
+
     </div>
+
     <h2 style="margin-bottom:24px;">Future Improvements</h2>
+
     <div class="future-list">
+
       <div class="future-item"><div class="future-num">01</div> Add micro-interactions for enhanced feedback and delight</div>
+
       <div class="future-item"><div class="future-num">02</div> Conduct usability testing with real users</div>
+
       <div class="future-item"><div class="future-num">03</div> Improve accessibility across all pages (WCAG 2.1)</div>
+
       <div class="future-item"><div class="future-num">04</div> Integrate analytics to track engagement and conversions</div>
+
     </div>
+
   </section>
 
   <section class="section reveal">
+
     <div class="section-header">
+
       <div class="section-num">14 — Conclusion</div>
+
       <div class="section-line"></div>
+
     </div>
+
     <div class="conclusion">
+
       <h2>Conclusion</h2>
+
       <p style="margin-top:14px;">
+
         This redesign transformed the agency's website into a modern, user-centered, and scalable digital experience.
+
         By focusing on structure, clarity, and consistency, the final design improves both user satisfaction and business impact.
+
       </p>
+
     </div>
+
   </section>
 
   <div class="closing-quote reveal">
+
     <blockquote>
+
       Good design is not just about how it looks, but how clearly it communicates and converts.
+
     </blockquote>
+
   </div>
 
 </div>
+
 </main>
 
 <script>
+
 const carousels = {};
 
 function initCarousel(id) {
+
   const track = document.getElementById('track-' + id);
+
   const dotsContainer = document.getElementById('dots-' + id);
+
   const counter = document.getElementById('counter-' + id);
+
   if (!track) return;
+
   const slides = track.querySelectorAll('.carousel-slide');
+
   const total = slides.length;
+
   let current = 0;
 
   for (let i = 0; i < total; i++) {
+
     const dot = document.createElement('button');
+
     dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+
     dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+
     dot.addEventListener('click', () => goTo(i));
+
     dotsContainer.appendChild(dot);
+
   }
 
   function goTo(idx) {
+
     current = (idx + total) % total;
+
     track.style.transform = 'translateX(-' + (current * 100) + '%)';
+
     dotsContainer.querySelectorAll('.carousel-dot').forEach((d, i) => {
+
       d.classList.toggle('active', i === current);
+
     });
+
     counter.textContent = (current + 1) + ' / ' + total;
+
   }
 
   const carousel = document.getElementById('carousel-' + id);
+
   let startX = null;
+
   carousel.addEventListener('pointerdown', (e) => {
+
     startX = e.clientX;
+
     carousel.setPointerCapture(e.pointerId);
+
   });
+
   carousel.addEventListener('pointermove', (e) => {
+
     if (startX === null) return;
+
     e.preventDefault();
+
   }, { passive: false });
+
   carousel.addEventListener('pointerup', (e) => {
+
     if (startX === null) return;
+
     const dx = e.clientX - startX;
+
     startX = null;
+
     if (Math.abs(dx) > 40) {
+
       dx < 0 ? goTo(current + 1) : goTo(current - 1);
+
     }
+
   });
+
   carousel.addEventListener('pointercancel', () => { startX = null; });
+
   carousels[id] = { goTo, current: () => current };
+
 }
 
 function prevSlide(id) {
+
   if (carousels[id]) carousels[id].goTo(carousels[id].current() - 1);
+
 }
 
 function nextSlide(id) {
+
   if (carousels[id]) carousels[id].goTo(carousels[id].current() + 1);
+
 }
 
 initCarousel('wireframes');
+
 initCarousel('services');
 
 const observer = new IntersectionObserver((entries) => {
+
   entries.forEach(entry => {
+
     if (entry.isIntersecting) {
+
       entry.target.classList.add('visible');
+
       observer.unobserve(entry.target);
+
     }
+
   });
+
 }, { threshold: 0.08 });
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 function initImages() {
+
   document.querySelectorAll('.hero-image img, .img-placeholder img, .carousel-slide img').forEach(img => {
+
     function tryShow() {
+
       if (img.src && img.src !== window.location.href && img.naturalWidth > 0) {
+
         img.classList.add('loaded');
+
       }
+
     }
+
     img.addEventListener('load', () => img.classList.add('loaded'));
+
     img.addEventListener('error', () => {});
+
     tryShow();
+
   });
+
 }
 
 initImages();
 
 document.addEventListener('keydown', (e) => {
+
   const focused = document.activeElement;
+
   const btn = focused?.closest('.carousel-controls');
+
   if (!btn) return;
+
   const wrap = btn.closest('.carousel-wrap');
+
   const trackEl = wrap?.querySelector('.carousel-track');
+
   if (!trackEl) return;
+
   const id = trackEl.id.replace('track-', '');
+
   if (e.key === 'ArrowLeft') prevSlide(id);
+
   if (e.key === 'ArrowRight') nextSlide(id);
+
 });
+
 </script>
 
 <div class="copyright-bar">&copy; Shabnam Silawat 2026 Digital Agency Case Study. All rights reserved.</div>
+
 <style>.copyright-bar{text-align:center;padding:12px 24px;font-family:'Roboto',sans-serif;font-size:13px;color:var(--muted);border-top:1px solid var(--border);background:var(--white);}</style>
 
 </body>
-</html>
 
+</html>
