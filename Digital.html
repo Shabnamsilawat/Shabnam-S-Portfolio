@@ -2,15 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>Case Study — Digital Agency Redesign</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
-
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --blue: #3852B4;
     --blue-light: #eef0fb;
@@ -24,13 +22,9 @@
     --radius: 16px;
     --radius-sm: 8px;
     --transition: 0.28s cubic-bezier(0.4,0,0.2,1);
-
-    /* FIX T1: explicit top-bar height variable so hero can account for it */
     --topbar-height: 64px;
   }
-
-  html { scroll-behavior: smooth; }
-
+  html { scroll-behavior: smooth; overflow-x: hidden; }
   body {
     font-family: 'Roboto', sans-serif;
     background: var(--white);
@@ -38,38 +32,31 @@
     line-height: 1.65;
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    max-width: 100%;
   }
-
-  /* ── TYPOGRAPHY ── */
   h1, h2, h3, h4 {
     font-family: 'Poppins', sans-serif;
     color: var(--blue);
     line-height: 1.2;
   }
-
   h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; }
   h2 { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 700; }
   h3 { font-size: clamp(1.1rem, 1.8vw, 1.35rem); font-weight: 600; }
   p  { color: var(--text); font-weight: 400; }
-
-  /* ── LAYOUT ── */
   .container {
     max-width: 1080px;
+    width: 100%;
     margin: 0 auto;
     padding: 0 24px;
+    box-sizing: border-box;
   }
-
-  /*
-   * FIX T1 (OVERLAP): The .page-wrapper had no padding-top, so the hero section
-   * was hidden directly under the sticky top-bar. Adding padding-top equal to the
-   * top-bar height (64px) guarantees proper visual separation at all times.
-   */
   .page-wrapper {
-    padding-top: calc(var(--topbar-height) + 8px); /* clears sticky bar + a tiny breath */
+    padding-top: calc(var(--topbar-height) + 8px);
     padding-bottom: 96px;
+    max-width: 100%;
+    overflow-x: hidden;
   }
-
-  /* ── TOP BAR ── */
   .top-bar {
     position: sticky;
     top: 0;
@@ -78,13 +65,12 @@
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
-    /* FIX T1: explicit, consistent padding so height is predictable */
     padding: 12px 24px;
     height: var(--topbar-height);
     display: flex;
     align-items: center;
+    max-width: 100%;
   }
-
   .top-bar-inner {
     max-width: 1080px;
     margin: 0 auto;
@@ -93,12 +79,6 @@
     align-items: center;
     gap: 16px;
   }
-
-  /*
-   * FIX T5 (MOBILE BACK BUTTON):
-   * Desktop: pill button with icon + text.
-   * Mobile (≤480px): collapses to a minimal icon-only circle — touch-friendly 44×44px.
-   */
   .back-btn {
     display: inline-flex;
     align-items: center;
@@ -117,73 +97,51 @@
     white-space: nowrap;
     flex-shrink: 0;
   }
-
   .back-btn:hover {
     background: var(--blue);
     color: var(--white);
   }
-
   .back-btn svg {
     width: 15px; height: 15px;
     flex-shrink: 0;
     transition: transform var(--transition);
   }
-
   .back-btn:hover svg { transform: translateX(-3px); }
-
-  /* Text label inside the back button — hidden on mobile */
   .back-btn .back-label { display: inline; }
-
-  /* ── BREADCRUMB ── */
   .breadcrumb {
     font-size: 13px;
     color: var(--muted);
     display: flex;
     gap: 6px;
     align-items: center;
-    /* FIX T2: prevent breadcrumb overflow on narrow screens */
     flex-wrap: wrap;
     min-width: 0;
   }
-
   .breadcrumb span { color: var(--blue); font-weight: 500; }
-
-  /* ── CONFIDENTIALITY BANNER ── */
   .confidentiality {
     background: var(--blue-light);
     border-left: 3px solid var(--blue);
     padding: 14px 20px;
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    /*
-     * FIX T1: was 40px 0 0 — lacked bottom spacing which caused visual crowding
-     * with the hero below it.
-     */
     margin: 40px 0 48px;
     font-size: 13.5px;
     color: var(--muted);
     line-height: 1.6;
+    max-width: 100%;
+    box-sizing: border-box;
   }
-
   .confidentiality strong { color: var(--blue); font-weight: 600; }
-
-  /* ── HERO ── */
   .hero {
-    /*
-     * FIX T1: explicit top padding so content never hides under the sticky bar.
-     * Bottom padding + border-bottom creates clear section separation from stats grid.
-     */
     padding: 48px 0 56px;
     border-bottom: 1px solid var(--border);
     margin-bottom: 56px;
   }
-
   .hero-meta {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
     margin-bottom: 20px;
   }
-
   .tag {
     display: inline-block;
     padding: 4px 14px;
@@ -195,23 +153,16 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
-
   .hero h1 { margin-bottom: 20px; }
-
   .hero-sub {
     font-size: clamp(1rem, 1.6vw, 1.15rem);
     color: var(--muted);
     max-width: 680px;
     margin-bottom: 40px;
   }
-
-  /* ── HERO IMAGE ── */
-  /*
-   * FIX T3: image container uses min-height instead of fixed aspect-ratio
-   * so tall or wide images scale naturally without cropping.
-   */
   .hero-image {
     width: 100%;
+    max-width: 100%;
     border-radius: var(--radius);
     min-height: 240px;
     background: var(--blue-light);
@@ -219,10 +170,10 @@
     align-items: center;
     justify-content: center;
     border: 1px solid var(--blue-mid);
-    overflow: hidden; /* FIX: changed from visible → hidden so images don't escape container */
+    overflow: hidden;
     position: relative;
+    box-sizing: border-box;
   }
-
   .hero-image .placeholder-label {
     font-family: 'Poppins', sans-serif;
     font-size: 15px;
@@ -239,13 +190,6 @@
     width: 100%;
     pointer-events: none;
   }
-
-  /*
-   * FIX T3: hero img — scales proportionally, never cropped.
-   * max-width:100% + height:auto ensures natural proportional scaling.
-   * object-fit:contain prevents distortion.
-   * Removed absolute positioning (was causing layout escape).
-   */
   .hero-image img {
     display: block;
     width: 100%;
@@ -255,12 +199,9 @@
     object-fit: contain;
     border-radius: var(--radius);
     margin: 0 auto;
-    position: relative; /* NOT absolute — preserves container height */
+    position: relative;
   }
-
   .hero-image img.loaded ~ .placeholder-label { display: none; }
-
-  /* ── IMG PLACEHOLDER — supports real images of any height ── */
   .img-placeholder {
     background: var(--blue-light);
     border: 1px dashed var(--blue-mid);
@@ -270,10 +211,11 @@
     align-items: center;
     justify-content: center;
     margin-top: 16px;
-    overflow: hidden; /* FIX: clip to container bounds */
+    overflow: hidden;
     position: relative;
+    max-width: 100%;
+    box-sizing: border-box;
   }
-
   .img-placeholder .label {
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
@@ -289,8 +231,6 @@
     width: 100%;
     pointer-events: none;
   }
-
-  /* FIX T3: img inside placeholder — proportional, never cropped, never overflows */
   .img-placeholder img {
     display: block;
     width: 100%;
@@ -302,14 +242,7 @@
     border-radius: var(--radius-sm);
     position: relative;
   }
-
   .img-placeholder img.loaded ~ .label { display: none; }
-
-  /* ── CAROUSEL SLIDE IMG ── */
-  /*
-   * FIX T3 + T4: carousel uses aspect-ratio container; images are position:absolute
-   * but fully contained using inset:0 + object-fit:contain so nothing overflows or crops.
-   */
   .carousel-slide {
     position: relative;
     min-width: 100%;
@@ -320,40 +253,33 @@
     background: var(--blue-light);
     overflow: hidden;
   }
-
   .carousel-slide img {
     display: block;
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain; /* NEVER crops */
+    object-fit: contain;
     margin: auto;
+    max-width: 100%;
   }
-
   .carousel-slide img.loaded ~ .slide-placeholder { display: none; }
-
-  /* ── VISIBILITY CONTROL ── */
   .hero-image img:not(.loaded),
   .img-placeholder img:not(.loaded),
   .carousel-slide img:not(.loaded) {
     display: none;
   }
-
   .hero-image img.loaded,
   .img-placeholder img.loaded,
   .carousel-slide img.loaded {
     display: block;
   }
-
-  /* ── STATS GRID ── */
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 16px;
     margin-bottom: 56px;
   }
-
   .stat-card {
     background: var(--card);
     border-radius: var(--radius);
@@ -361,13 +287,11 @@
     border: 1px solid var(--border);
     transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
   }
-
   .stat-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 32px rgba(56,82,180,0.1);
     background: var(--blue-light);
   }
-
   .stat-label {
     font-size: 11px;
     font-weight: 600;
@@ -376,24 +300,19 @@
     color: var(--blue);
     margin-bottom: 8px;
   }
-
   .stat-value {
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     font-weight: 700;
     color: var(--black);
   }
-
-  /* ── SECTION COMMON ── */
   .section { margin-bottom: 72px; }
-
   .section-header {
     display: flex;
     align-items: center;
     gap: 14px;
     margin-bottom: 28px;
   }
-
   .section-num {
     font-family: 'Poppins', sans-serif;
     font-size: 11px;
@@ -406,38 +325,31 @@
     text-transform: uppercase;
     white-space: nowrap;
   }
-
   .section-line {
     flex: 1;
     height: 1px;
     background: var(--border);
   }
-
-  /* ── CARD ── */
   .card {
     background: var(--card);
     border-radius: var(--radius);
     padding: 32px;
     border: 1px solid var(--border);
     transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
+    max-width: 100%;
+    box-sizing: border-box;
   }
-
   .card:hover {
     transform: translateY(-4px);
     box-shadow: 0 16px 40px rgba(56,82,180,0.09);
     background: var(--blue-light);
   }
-
   .card h3 { margin-bottom: 12px; }
   .card h2 { margin-bottom: 12px; }
   .card p  { color: var(--muted); font-size: 15px; }
-
-  /* ── CARD GRID ── */
   .card-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .card-grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-
-  /* ── LIST INSIDE CARD ── */
   .styled-list {
     list-style: none;
     padding: 0;
@@ -445,7 +357,6 @@
     flex-direction: column;
     gap: 10px;
   }
-
   .styled-list li {
     display: flex;
     align-items: flex-start;
@@ -453,7 +364,6 @@
     font-size: 15px;
     color: var(--muted);
   }
-
   .styled-list li::before {
     content: '';
     width: 6px; height: 6px;
@@ -462,20 +372,17 @@
     flex-shrink: 0;
     margin-top: 8px;
   }
-
-  /* ── PROBLEM STATEMENT ── */
   .problem-statement {
     background: var(--blue);
     color: var(--white);
     border-radius: var(--radius);
     padding: 40px;
     margin-bottom: 24px;
+    box-sizing: border-box;
+    max-width: 100%;
   }
-
   .problem-statement h2 { color: var(--white); margin-bottom: 16px; }
   .problem-statement p  { color: rgba(255,255,255,0.82); font-size: 15.5px; }
-
-  /* ── ISSUES GRID ── */
   .issue-card {
     background: var(--card);
     border-radius: var(--radius);
@@ -484,57 +391,42 @@
     transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
     border-top: 3px solid var(--blue);
   }
-
   .issue-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 28px rgba(56,82,180,0.1);
     background: var(--blue-light);
   }
-
   .issue-card h3 { font-size: 1rem; margin-bottom: 10px; }
   .issue-card p  { font-size: 14px; color: var(--muted); }
-
-  /* ── TWO-COL SPLIT ── */
   .split-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
-
-  /* ── CAROUSEL ── */
   .carousel-wrap {
     background: var(--card);
     border-radius: var(--radius);
     border: 1px solid var(--border);
     overflow: hidden;
     margin-top: 16px;
+    max-width: 100%;
+    box-sizing: border-box;
   }
-
-  /*
-   * FIX T4: carousel uses aspect-ratio for consistent proportional sizing.
-   * Touch events added via JS for swipe support.
-   */
   .carousel {
     position: relative;
     aspect-ratio: 16/9;
     background: var(--blue-light);
     overflow: hidden;
-    /* FIX T4: prevent text selection during swipe */
     user-select: none;
     -webkit-user-select: none;
+    max-width: 100%;
   }
-
   .carousel-track {
     display: flex;
     height: 100%;
-    /*
-     * FIX T4: will-change:transform + GPU compositing for smooth mobile swipe
-     * transition tuned to feel natural on touch
-     */
     transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
     will-change: transform;
   }
-
   .carousel-slide .slide-placeholder {
     text-align: center;
     padding: 32px;
@@ -545,7 +437,6 @@
     align-items: center;
     justify-content: center;
   }
-
   .slide-placeholder p {
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
@@ -553,13 +444,11 @@
     color: var(--blue);
     opacity: 0.45;
   }
-
   .slide-placeholder .slide-icon {
     font-size: 40px;
     margin-bottom: 12px;
     opacity: 0.3;
   }
-
   .carousel-controls {
     display: flex;
     align-items: center;
@@ -567,10 +456,6 @@
     padding: 14px 20px;
     border-top: 1px solid var(--border);
   }
-
-  /*
-   * FIX T4/T5: carousel buttons increased to 44×44px for comfortable touch target
-   */
   .carousel-btn {
     width: 44px; height: 44px;
     border-radius: 50%;
@@ -583,12 +468,10 @@
     justify-content: center;
     transition: background var(--transition), color var(--transition);
     flex-shrink: 0;
-    touch-action: manipulation; /* prevents 300ms delay on mobile */
+    touch-action: manipulation;
   }
-
   .carousel-btn:hover { background: var(--blue); color: var(--white); }
   .carousel-btn svg { width: 16px; height: 16px; }
-
   .carousel-dots {
     display: flex;
     gap: 6px;
@@ -596,35 +479,28 @@
     flex-wrap: wrap;
     justify-content: center;
   }
-
   .carousel-dot {
     width: 7px; height: 7px;
     border-radius: 50%;
     background: var(--blue-mid);
     cursor: pointer;
     transition: background var(--transition), transform var(--transition);
-    /* FIX T4: larger touch target via padding */
     padding: 6px;
     width: auto;
     height: auto;
     width: 7px;
     height: 7px;
   }
-
   .carousel-dot.active {
     background: var(--blue);
     transform: scale(1.3);
   }
-
   .carousel-counter {
     font-size: 13px;
     font-weight: 500;
     color: var(--muted);
   }
-
-  /* ── COLOR PALETTE ── */
   .color-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
-
   .color-swatch {
     border-radius: var(--radius-sm);
     overflow: hidden;
@@ -632,19 +508,15 @@
     flex: 1;
     min-width: 120px;
   }
-
   .swatch-block { height: 64px; }
   .swatch-info { padding: 10px 14px; background: var(--white); }
   .swatch-name { font-size: 13px; font-weight: 600; color: var(--text); }
   .swatch-hex  { font-size: 12px; color: var(--muted); }
-
-  /* ── FONT DISPLAY ── */
   .font-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
   }
-
   .font-card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -652,14 +524,11 @@
     padding: 24px;
     transition: box-shadow var(--transition), transform var(--transition);
   }
-
   .font-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 28px rgba(56,82,180,0.1);
   }
-
   .font-label { font-size: 11px; font-weight: 600; color: var(--blue); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
-
   .font-display-heading {
     font-family: 'Poppins', sans-serif;
     font-size: clamp(1.4rem, 3vw, 2rem);
@@ -667,20 +536,16 @@
     color: var(--black);
     line-height: 1.1;
   }
-
   .font-display-body {
     font-size: 15px;
     color: var(--muted);
     margin-top: 6px;
   }
-
-  /* ── IA STRUCTURE ── */
   .ia-tree {
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
-
   .ia-item {
     background: var(--card);
     border: 1px solid var(--border);
@@ -693,17 +558,13 @@
     font-weight: 500;
     transition: background var(--transition), transform var(--transition);
   }
-
   .ia-item:hover {
     background: var(--blue-light);
     transform: translateX(6px);
   }
-
   .ia-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
   .ia-item.child { margin-left: 24px; opacity: 0.8; }
   .ia-item.child .ia-dot { background: var(--blue-mid); }
-
-  /* ── USER FLOW ── */
   .flow-steps {
     display: flex;
     align-items: center;
@@ -711,7 +572,6 @@
     gap: 8px;
     margin-top: 8px;
   }
-
   .flow-step {
     flex: 1;
     min-width: 130px;
@@ -723,13 +583,11 @@
     transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
     position: relative;
   }
-
   .flow-step:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 24px rgba(56,82,180,0.1);
     background: var(--blue-light);
   }
-
   .flow-step-num {
     font-family: 'Poppins', sans-serif;
     font-size: 22px;
@@ -738,14 +596,12 @@
     line-height: 1;
     margin-bottom: 6px;
   }
-
   .flow-step-label {
     font-size: 13px;
     font-weight: 600;
     color: var(--text);
     line-height: 1.35;
   }
-
   .flow-arrow {
     color: var(--blue-mid);
     padding: 0 4px;
@@ -753,14 +609,11 @@
     flex-shrink: 0;
     line-height: 1;
   }
-
-  /* ── CHALLENGES/SOLUTIONS ── */
   .cs-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
-
   .cs-card {
     background: var(--card);
     border-radius: var(--radius);
@@ -768,29 +621,22 @@
     border: 1px solid var(--border);
     transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
   }
-
   .cs-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 28px rgba(56,82,180,0.09);
     background: var(--blue-light);
   }
-
   .cs-card.challenges { border-top: 3px solid #e05252; }
   .cs-card.solutions  { border-top: 3px solid #3852B4; }
-
   .cs-title {
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     font-weight: 700;
     margin-bottom: 18px;
   }
-
   .cs-card.challenges .cs-title { color: #c44444; }
   .cs-card.solutions  .cs-title { color: var(--blue); }
-
-  /* ── OUTCOMES ── */
   .outcome-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
-
   .outcome-card {
     background: var(--blue);
     border-radius: var(--radius);
@@ -799,23 +645,18 @@
     text-align: center;
     transition: transform var(--transition), box-shadow var(--transition);
   }
-
   .outcome-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 16px 32px rgba(56,82,180,0.3);
   }
-
   .outcome-card h3 { color: var(--white); margin-bottom: 10px; font-size: 1.1rem; }
   .outcome-card p  { color: rgba(255,255,255,0.75); font-size: 14px; }
-
-  /* ── CLOSING QUOTE ── */
   .closing-quote {
     text-align: center;
     padding: 56px 24px;
     border-top: 1px solid var(--border);
     margin-top: 16px;
   }
-
   .closing-quote blockquote {
     font-family: 'Poppins', sans-serif;
     font-size: clamp(1.1rem, 2.5vw, 1.6rem);
@@ -826,7 +667,6 @@
     line-height: 1.45;
     position: relative;
   }
-
   .closing-quote blockquote::before,
   .closing-quote blockquote::after {
     content: '"';
@@ -837,10 +677,7 @@
     vertical-align: -0.4em;
     margin: 0 4px;
   }
-
-  /* ── LEARNINGS ── */
   .learnings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-
   .learning-card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -849,18 +686,13 @@
     transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
     border-bottom: 3px solid var(--blue);
   }
-
   .learning-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 24px rgba(56,82,180,0.1);
     background: var(--blue-light);
   }
-
   .learning-card p { font-size: 14.5px; color: var(--muted); }
-
-  /* ── FUTURE ── */
   .future-list { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
-
   .future-item {
     display: flex;
     align-items: center;
@@ -873,9 +705,7 @@
     font-weight: 500;
     transition: background var(--transition), transform var(--transition);
   }
-
   .future-item:hover { background: var(--blue-light); transform: translateX(6px); }
-
   .future-num {
     font-family: 'Poppins', sans-serif;
     font-size: 13px;
@@ -890,42 +720,39 @@
     justify-content: center;
     flex-shrink: 0;
   }
-
-  /* ── CONCLUSION ── */
   .conclusion {
     background: var(--blue-light);
     border-radius: var(--radius);
     padding: 40px;
     border: 1px solid var(--blue-mid);
+    box-sizing: border-box;
+    max-width: 100%;
   }
-
   .conclusion h2 { margin-bottom: 16px; }
   .conclusion p { font-size: 16px; color: var(--muted); line-height: 1.75; }
-
-  /* ── SCROLL REVEAL ── */
   .reveal {
     opacity: 0;
     transform: translateY(24px);
     transition: opacity 0.55s ease, transform 0.55s ease;
   }
-
   .reveal.visible {
     opacity: 1;
     transform: translateY(0);
   }
 
-  /* ════════════════════════════════════════════════
-     RESPONSIVE BREAKPOINTS
-     All layout fixes collected and organised cleanly
-  ════════════════════════════════════════════════ */
-
-  /* ── TABLET (≤768px) ── */
   @media (max-width: 768px) {
     :root {
       --topbar-height: 60px;
     }
-
-    /* FIX T2: all 2-3 column grids collapse to single column */
+    html, body {
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+    .reveal {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+    }
     .card-grid-2,
     .card-grid-3,
     .split-2,
@@ -933,50 +760,83 @@
     .font-row {
       grid-template-columns: 1fr;
     }
-
+    .font-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      height: auto;
+      overflow: visible;
+    }
+    .font-card {
+      display: block;
+      height: auto;
+      overflow: visible;
+      opacity: 1;
+      visibility: visible;
+    }
+    .color-row {
+      display: flex;
+      height: auto;
+      overflow: visible;
+    }
+    .color-swatch {
+      min-width: 0;
+      flex: 1 1 40%;
+      display: block;
+      height: auto;
+      overflow: visible;
+    }
+    .swatch-block {
+      height: 64px;
+    }
+    .swatch-info {
+      display: block;
+      height: auto;
+    }
+    .img-placeholder {
+      height: auto;
+      overflow: visible;
+      min-height: 200px;
+    }
+    .card {
+      height: auto;
+      overflow: visible;
+    }
+    .section {
+      height: auto;
+      overflow: visible;
+      display: block;
+    }
     .problem-statement { padding: 28px 24px; }
     .card { padding: 24px; }
-
-    /* FIX T1: hero spacing tightened but not cramped */
     .hero { padding: 32px 0 40px; margin-bottom: 40px; }
-
-    /* FIX T4: flow steps stack vertically on mobile */
     .flow-steps { gap: 8px; flex-direction: column; }
     .flow-arrow { transform: rotate(90deg); }
-
     .closing-quote { padding: 40px 16px; }
     .conclusion { padding: 28px 24px; }
-
-    /* FIX T2: stats grid stays 2-column on tablet */
     .stats-grid { grid-template-columns: 1fr 1fr; }
     .outcome-grid { grid-template-columns: 1fr 1fr; }
-
-    /* FIX T3: hero image height cap on tablet */
-    .hero-image img { max-height: 380px; }
-    .img-placeholder img { max-height: 360px; }
-
-    /* FIX T2: tighten section spacing */
+    .hero-image img { max-width: 100%; height: auto; max-height: 380px; }
+    .img-placeholder img { max-width: 100%; height: auto; max-height: 360px; }
     .section { margin-bottom: 48px; }
     .stats-grid { margin-bottom: 40px; }
     .confidentiality { margin: 24px 0 32px; }
+    .container { padding: 0 16px; }
+    .carousel-wrap { overflow: hidden; }
+    .carousel { overflow: hidden; aspect-ratio: 16/9; }
+    .closing-quote { padding-bottom: 16px; }
   }
 
-  /* ── MOBILE (≤480px) ── */
   @media (max-width: 480px) {
     :root {
       --topbar-height: 56px;
     }
-
-    /* FIX T2: single column on small screens */
+    html, body {
+      overflow-x: hidden;
+      max-width: 100%;
+    }
     .stats-grid, .outcome-grid { grid-template-columns: 1fr; }
     .color-row { flex-direction: column; }
-
     h1 { font-size: 1.7rem; }
-
-    /*
-     * FIX T5: back button collapses to icon-only on small screens.
-     * 40×40px circle — clearly visible, properly spaced, touch-friendly.
-     */
     .back-btn {
       padding: 0;
       width: 40px;
@@ -985,55 +845,28 @@
       justify-content: center;
       gap: 0;
     }
-
     .back-btn .back-label { display: none; }
-
     .back-btn svg { width: 18px; height: 18px; }
-
     .container { padding: 0 16px; }
-
-    /* FIX T3: further reduce image heights on small screens — no cropping */
-    .hero-image img { max-height: 260px; }
-    .img-placeholder img { max-height: 240px; }
-
-    /* FIX T2: tighter section/card spacing */
+    .hero-image img { max-width: 100%; height: auto; max-height: 260px; }
+    .img-placeholder img { max-width: 100%; height: auto; max-height: 240px; }
     .section { margin-bottom: 36px; }
     .card { padding: 20px; }
-
-    /*
-     * FIX T4: on very small screens reduce carousel aspect ratio so slides
-     * aren't too tall — portrait mockups still show properly
-     */
     .carousel { aspect-ratio: 4/3; }
+    .ia-item.child { margin-left: 12px; }
   }
 
-  /* ── EXTRA SMALL (≤360px) ── */
   @media (max-width: 360px) {
     .section-num { font-size: 10px; padding: 3px 8px; }
     .stat-value  { font-size: 0.9rem; }
     .card-grid-3 { grid-template-columns: 1fr; }
     .carousel { aspect-ratio: 1/1; }
   }
-
-  @media (max-width: 768px) {
-    .confidentiality { margin-top: 16px; padding: 16px 20px; }
-    .closing-quote { padding-bottom: 16px; }
-    .carousel-wrap { overflow: visible; height: auto; }
-    .carousel { overflow: visible; height: auto; }
-  }
 </style>
 </head>
-
 <body>
-
-<!-- TOP BAR -->
 <header class="top-bar">
   <div class="top-bar-inner">
-    <!--
-      FIX T5: back button now contains both icon and a labelled text span.
-      On ≤480px the .back-label is hidden via CSS and the button becomes
-      a clean 40×40px icon circle — touch-friendly and clearly visible.
-    -->
     <a class="back-btn" href="./index.html" onclick="history.back(); return true;" aria-label="Go back">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="15 18 9 12 15 6"></polyline>
@@ -1046,13 +879,11 @@
 <main class="page-wrapper">
 <div class="container">
 
-  <!-- CONFIDENTIALITY -->
   <div class="confidentiality reveal">
     <strong>Confidentiality Note:</strong>&nbsp;
     Due to confidentiality and privacy agreements, the name and identifiable details of the client have been withheld. This case study focuses on the design process, problem-solving approach, and final outcomes while maintaining client anonymity.
   </div>
 
-  <!-- HERO -->
   <section class="hero reveal">
     <div class="hero-meta">
       <span class="tag">UI/UX Design</span>
@@ -1067,7 +898,6 @@
     </div>
   </section>
 
-  <!-- STATS -->
   <div class="stats-grid reveal">
     <div class="stat-card">
       <div class="stat-label">Role</div>
@@ -1087,7 +917,6 @@
     </div>
   </div>
 
-  <!-- PROJECT OVERVIEW -->
   <section class="section reveal">
     <div class="section-header">
       <div class="section-num">01 — Overview</div>
@@ -1104,7 +933,6 @@
     </div>
   </section>
 
-  <!-- PROBLEM STATEMENT -->
   <section class="section reveal">
     <div class="section-header">
       <div class="section-num">02 — Problem</div>
@@ -1138,7 +966,6 @@
     </div>
   </section>
 
-  <!-- GOALS & TARGET AUDIENCE -->
   <section class="section reveal">
     <div class="section-header">
       <div class="section-num">03 — Goals</div>
@@ -1167,7 +994,6 @@
     </div>
   </section>
 
-  <!-- RESEARCH & INSIGHTS -->
   <section class="section reveal">
     <div class="section-header">
       <div class="section-num">04 — Research</div>
@@ -1196,7 +1022,6 @@
     </div>
   </section>
 
-  <!-- INFORMATION ARCHITECTURE -->
   <section class="section reveal">
     <div class="section-header">
       <div class="section-num">05 — Architecture</div>
@@ -1219,7 +1044,6 @@
     </div>
   </section>
 
-  <!-- WIREFRAMING -->
   <section class="section reveal">
     <div class="section-header">
       <div class="section-num">06 — Wireframes</div>
@@ -1265,15 +1089,12 @@
     </div>
   </section>
 
-  <!-- VISUAL DESIGN -->
   <section class="section reveal">
     <div class="section-header">
       <div class="section-num">07 — Visual Design</div>
       <div class="section-line"></div>
     </div>
     <h2 style="margin-bottom:24px;">Visual Design System</h2>
-
-    <!-- Color Palette -->
     <div class="card" style="margin-bottom:20px;">
       <h3 style="margin-bottom:20px;">Color Palette</h3>
       <div class="color-row">
@@ -1295,8 +1116,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Typography -->
     <div class="font-row">
       <div class="font-card">
         <div class="font-label">Headings</div>
@@ -1311,7 +1130,6 @@
     </div>
   </section>
 
-  <!-- KEY SCREENS -->
   <section class="section reveal">
     <div class="section-header">
       <div class="section-num">08 — Key Screens</div>
@@ -1319,7 +1137,6 @@
     </div>
     <h2 style="margin-bottom:24px;">Key Screens</h2>
 
-    <!-- 1. LANDING PAGE -->
     <div class="card" style="margin-bottom:28px;">
       <h3>Landing Page</h3>
       <p style="margin:10px 0 8px;color:var(--muted);font-size:15px;">
@@ -1347,7 +1164,6 @@
       </div>
     </div>
 
-    <!-- 2. SERVICES PAGE -->
     <div class="card" style="margin-bottom:28px;">
       <h3>Services Page</h3>
       <p style="margin:10px 0 8px;color:var(--muted);font-size:15px;">
@@ -1374,7 +1190,6 @@
       </div>
     </div>
 
-    <!-- 3. BLOG PAGE (MAIN) -->
     <div class="card" style="margin-bottom:28px;">
       <h3>Blog Page (Main)</h3>
       <p style="margin:10px 0 8px;color:var(--muted);font-size:15px;">
@@ -1401,7 +1216,6 @@
       </div>
     </div>
 
-    <!-- 4. BLOG PAGE (INNER) -->
     <div class="card" style="margin-bottom:28px;">
       <h3>Blog Page (Inner)</h3>
       <p style="margin:10px 0 8px;color:var(--muted);font-size:15px;">
@@ -1428,7 +1242,6 @@
       </div>
     </div>
 
-    <!-- 5. CASE STUDY PAGE (MAIN) -->
     <div class="card" style="margin-bottom:28px;">
       <h3>Case Study Page (Main)</h3>
       <p style="margin:10px 0 8px;color:var(--muted);font-size:15px;">
@@ -1455,7 +1268,6 @@
       </div>
     </div>
 
-    <!-- 6. CASE STUDY PAGE (INNER) -->
     <div class="card" style="margin-bottom:28px;">
       <h3>Case Study Page (Inner)</h3>
       <p style="margin:10px 0 8px;color:var(--muted);font-size:15px;">
@@ -1482,7 +1294,6 @@
       </div>
     </div>
 
-    <!-- 7. CONTACT US PAGE -->
     <div class="card" style="margin-bottom:20px;">
       <h3>Contact Us Page</h3>
       <p style="margin:10px 0 8px;color:var(--muted);font-size:15px;">
@@ -1510,7 +1321,6 @@
     </div>
   </section>
 
-  <!-- USER FLOW -->
   <section class="section reveal">
     <div class="section-header">
       <div class="section-num">09 — User Flow</div>
@@ -1549,7 +1359,6 @@
     </div>
   </section>
 
-  <!-- CHALLENGES & SOLUTIONS -->
   <section class="section reveal">
     <div class="section-header">
       <div class="section-num">10 — Challenges</div>
@@ -1577,7 +1386,6 @@
     </div>
   </section>
 
-  <!-- OUTCOMES -->
   <section class="section reveal">
     <div class="section-header">
       <div class="section-num">11 — Outcomes</div>
@@ -1603,7 +1411,6 @@
     </div>
   </section>
 
-  <!-- LEARNINGS -->
   <section class="section reveal">
     <div class="section-header">
       <div class="section-num">12 — Learnings</div>
@@ -1629,7 +1436,6 @@
     </div>
   </section>
 
-  <!-- FUTURE IMPROVEMENTS -->
   <section class="section reveal">
     <div class="section-header">
       <div class="section-num">13 — Future</div>
@@ -1644,7 +1450,6 @@
     </div>
   </section>
 
-  <!-- CONCLUSION -->
   <section class="section reveal">
     <div class="section-header">
       <div class="section-num">14 — Conclusion</div>
@@ -1659,7 +1464,6 @@
     </div>
   </section>
 
-  <!-- CLOSING QUOTE -->
   <div class="closing-quote reveal">
     <blockquote>
       Good design is not just about how it looks, but how clearly it communicates and converts.
@@ -1668,8 +1472,8 @@
 
 </div>
 </main>
+
 <script>
-// ── CAROUSEL ENGINE ──────────────────────────────────────────────────────────
 const carousels = {};
 
 function initCarousel(id) {
@@ -1677,12 +1481,10 @@ function initCarousel(id) {
   const dotsContainer = document.getElementById('dots-' + id);
   const counter = document.getElementById('counter-' + id);
   if (!track) return;
-
   const slides = track.querySelectorAll('.carousel-slide');
   const total = slides.length;
   let current = 0;
 
-  // Build dots
   for (let i = 0; i < total; i++) {
     const dot = document.createElement('button');
     dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
@@ -1700,25 +1502,16 @@ function initCarousel(id) {
     counter.textContent = (current + 1) + ' / ' + total;
   }
 
-  /*
-   * FIX T4: touch swipe support — horizontal drag moves between slides.
-   * Uses pointer events (works on both touch and mouse).
-   * Threshold of 40px prevents accidental swipes on vertical scroll.
-   */
   const carousel = document.getElementById('carousel-' + id);
   let startX = null;
-
   carousel.addEventListener('pointerdown', (e) => {
     startX = e.clientX;
     carousel.setPointerCapture(e.pointerId);
   });
-
   carousel.addEventListener('pointermove', (e) => {
     if (startX === null) return;
-    // Suppress native scroll during horizontal drag
     e.preventDefault();
   }, { passive: false });
-
   carousel.addEventListener('pointerup', (e) => {
     if (startX === null) return;
     const dx = e.clientX - startX;
@@ -1727,9 +1520,7 @@ function initCarousel(id) {
       dx < 0 ? goTo(current + 1) : goTo(current - 1);
     }
   });
-
   carousel.addEventListener('pointercancel', () => { startX = null; });
-
   carousels[id] = { goTo, current: () => current };
 }
 
@@ -1741,11 +1532,9 @@ function nextSlide(id) {
   if (carousels[id]) carousels[id].goTo(carousels[id].current() + 1);
 }
 
-// Init all carousels
 initCarousel('wireframes');
 initCarousel('services');
 
-// ── SCROLL REVEAL ─────────────────────────────────────────────────────────────
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -1757,7 +1546,6 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ── IMAGE AUTO-SHOW ───────────────────────────────────────────────────────────
 function initImages() {
   document.querySelectorAll('.hero-image img, .img-placeholder img, .carousel-slide img').forEach(img => {
     function tryShow() {
@@ -1766,14 +1554,13 @@ function initImages() {
       }
     }
     img.addEventListener('load', () => img.classList.add('loaded'));
-    img.addEventListener('error', () => {}); // fail silently, keep placeholder
-    tryShow(); // catch already-loaded images
+    img.addEventListener('error', () => {});
+    tryShow();
   });
 }
 
 initImages();
 
-// ── KEYBOARD CAROUSEL SUPPORT ────────────────────────────────────────────────
 document.addEventListener('keydown', (e) => {
   const focused = document.activeElement;
   const btn = focused?.closest('.carousel-controls');
@@ -1787,9 +1574,8 @@ document.addEventListener('keydown', (e) => {
 });
 </script>
 
-<div class="copyright-bar">&copy; Shabnam Silawat 2026 Digital Agency Case Study Page. All rights reserved.</div>
+<div class="copyright-bar">&copy; Shabnam Silawat 2026 Digital Agency Case Study. All rights reserved.</div>
 <style>.copyright-bar{text-align:center;padding:12px 24px;font-family:'Roboto',sans-serif;font-size:13px;color:var(--muted);border-top:1px solid var(--border);background:var(--white);}</style>
+
 </body>
 </html>
-
-
