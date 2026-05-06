@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Agency Dashboard – UI/UX Case Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #1E6FE8;
+      --blue-dark: #1558C7;
+      --blue-light: #EBF2FD;
+      --blue-mid: #DDEAFC;
+      --white: #FFFFFF;
+      --black: #0D0D0D;
+      --gray-900: #1A1A1A;
+      --gray-700: #3D3D3D;
+      --gray-500: #6B6B6B;
+      --gray-300: #D0D0D0;
+      --gray-100: #F4F6FA;
+      --shadow-sm: 0 2px 8px rgba(30,111,232,0.07);
+      --shadow-md: 0 4px 20px rgba(30,111,232,0.10);
+      --shadow-lg: 0 8px 40px rgba(30,111,232,0.13);
+      --radius: 14px;
+      --radius-sm: 8px;
+      --max-w: 1120px;
+      --font-heading: 'Poppins', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    /* ── CRITICAL: PREVENT HORIZONTAL OVERFLOW ── */
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--gray-900);
+      line-height: 1.7;
+    }
+
+    /* Every element is bounded */
+    * { max-width: 100%; }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ── BACK BUTTON ── */
+    .back-wrap {
+      position: fixed;
+      top: 20px;
+      left: clamp(12px, 3vw, 40px);
+      z-index: 100;
+    }
+
+    .back-btn-desktop {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      border: 1.5px solid var(--blue);
+      border-radius: 50px;
+      background: var(--white);
+      color: var(--blue);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.22s, color 0.22s, box-shadow 0.22s, transform 0.18s;
+      box-shadow: var(--shadow-sm);
+      white-space: nowrap;
+    }
+
+    .back-btn-desktop:hover {
+      background: var(--blue);
+      color: var(--white);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
+    }
+
+    .back-btn-desktop svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    .back-btn-mobile {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border: 1.5px solid var(--blue);
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--blue);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.22s, color 0.22s, box-shadow 0.22s;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .back-btn-mobile:hover { background: var(--blue); color: var(--white); }
+    .back-btn-mobile svg { width: 17px; height: 17px; }
+
+    @media (max-width: 600px) {
+      .back-btn-desktop { display: none; }
+      .back-btn-mobile { display: flex; }
+    }
+
+    /* ── MAIN WRAPPER ── */
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 56px);
+      width: 100%;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: clamp(80px, 10vw, 120px) 0 clamp(36px, 5vw, 56px);
+      background: linear-gradient(160deg, #F0F6FF 0%, #FFFFFF 60%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -140px;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(30,111,232,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      position: relative;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: var(--blue-light);
+      padding: 5px 14px;
+      border-radius: 50px;
+      width: fit-content;
+      margin-bottom: 2px;
+    }
+
+    .hero-tag span { width: 6px; height: 6px; background: var(--blue); border-radius: 50%; display: inline-block; flex-shrink: 0; }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.9rem, 4.5vw, 3.4rem);
+      font-weight: 800;
+      color: var(--blue);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 em { font-style: normal; color: var(--gray-900); }
+
+    .hero-sub {
+      font-size: clamp(0.9rem, 1.6vw, 1rem);
+      color: var(--gray-500);
+      font-weight: 400;
+      max-width: 540px;
+      margin-top: 6px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .hero-meta-pill {
+      padding: 5px 14px;
+      border-radius: 50px;
+      background: var(--white);
+      border: 1px solid var(--gray-300);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--gray-700);
+    }
+
+    /* ── HERO COVER IMAGE ── */
+    .cover-image-section {
+      margin-top: clamp(24px, 4vw, 40px);
+      padding: 0 clamp(16px, 4vw, 56px);
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .cover-image-section .container { padding: 0; }
+
+    .cover-img-wrap {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--gray-100);
+      border: 1px solid rgba(30,111,232,0.10);
+      box-shadow: var(--shadow-lg);
+      width: 100%;
+      /* Constrain cover image height */
+      max-height: 520px;
+    }
+
+    .cover-img-wrap img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .cover-img-placeholder {
+      width: 100%;
+      min-height: 280px;
+      max-height: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #EBF2FD 0%, #F4F8FF 100%);
+      padding: 32px;
+      gap: 12px;
+    }
+
+    .cover-img-placeholder img {
+      max-height: 340px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: clamp(32px, 5vw, 64px) 0; }
+    section + section { border-top: 1px solid #EEF2F9; }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-label::after {
+      content: '';
+      display: block;
+      flex: 1;
+      max-width: 40px;
+      height: 2px;
+      background: var(--blue);
+      border-radius: 2px;
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--blue);
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .section-body {
+      font-size: clamp(0.875rem, 1.6vw, 0.95rem);
+      color: var(--gray-700);
+      max-width: 700px;
+      line-height: 1.75;
+    }
+
+    /* ── CONFIDENTIALITY NOTICE ── */
+    .notice-box {
+      display: flex;
+      gap: 14px;
+      padding: clamp(16px, 2.5vw, 24px);
+      border-radius: var(--radius);
+      background: var(--blue-light);
+      border-left: 4px solid var(--blue);
+      box-shadow: var(--shadow-sm);
+      align-items: flex-start;
+      margin-top: 12px;
+    }
+
+    .notice-box svg { flex-shrink: 0; margin-top: 2px; }
+    .notice-box p { font-size: 0.875rem; color: var(--gray-700); line-height: 1.7; }
+
+    /* ── OVERVIEW GRID ── */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .overview-card {
+      padding: clamp(16px, 2.5vw, 24px);
+      border-radius: var(--radius);
+      background: var(--gray-100);
+      border: 1px solid transparent;
+      transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+    }
+
+    .overview-card:hover {
+      background: var(--blue-light);
+      border-color: rgba(30,111,232,0.18);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+
+    .overview-card h3 {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 6px;
+    }
+
+    .overview-card p { font-size: 0.85rem; color: var(--gray-500); line-height: 1.65; }
+
+    /* ── PROJECT TYPE TAGS ── */
+    .type-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .type-tag {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      border-radius: 50px;
+      background: var(--white);
+      border: 1.5px solid var(--blue-mid);
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--blue-dark);
+      transition: background 0.22s, border-color 0.22s, transform 0.18s, box-shadow 0.22s;
+    }
+
+    .type-tag:hover {
+      background: var(--blue-light);
+      border-color: var(--blue);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .type-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+    }
+
+    /* ── ROLE ── */
+    .role-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(16px, 3vw, 40px);
+      margin-top: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 700px) { .role-layout { grid-template-columns: 1fr; gap: 16px; } }
+
+    .role-card {
+      padding: clamp(16px, 2.5vw, 24px);
+      border-radius: var(--radius);
+      background: var(--white);
+      border: 1px solid #E4EBF7;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .role-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--blue-mid);
+    }
+
+    .role-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+    .role-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      font-size: 0.875rem;
+      color: var(--gray-700);
+      line-height: 1.55;
+    }
+
+    .role-list li::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    /* ── TWO COLUMN LAYOUT ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(16px, 3vw, 40px);
+      margin-top: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; gap: 16px; } }
+
+    /* ── APPROACH STEPS ── */
+    .approach-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .approach-step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: clamp(12px, 2vw, 18px);
+      border-radius: var(--radius);
+      background: var(--gray-100);
+      border: 1px solid transparent;
+      transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+    }
+
+    .approach-step:hover {
+      background: var(--blue-light);
+      border-color: rgba(30,111,232,0.15);
+      box-shadow: var(--shadow-md);
+      transform: translateX(4px);
+    }
+
+    .step-num {
+      min-width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: var(--white);
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .approach-step p { font-size: 0.875rem; color: var(--gray-700); line-height: 1.65; }
+
+    /* ── PROBLEM GRID ── */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .problem-card {
+      padding: clamp(14px, 2vw, 20px);
+      border-radius: var(--radius);
+      background: var(--white);
+      border: 1px solid #E4EBF7;
+      box-shadow: var(--shadow-sm);
+      transition: background 0.25s, box-shadow 0.25s, transform 0.2s, border-color 0.25s;
+    }
+
+    .problem-card:hover {
+      background: var(--blue-light);
+      border-color: rgba(30,111,232,0.2);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .problem-card .icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: var(--blue-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .problem-card h4 {
+      font-family: var(--font-heading);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 5px;
+    }
+
+    .problem-card p { font-size: 0.82rem; color: var(--gray-500); line-height: 1.6; }
+
+    /* ── GOAL LIST ── */
+    .goal-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .goal-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: clamp(12px, 1.8vw, 16px);
+      border-radius: var(--radius-sm);
+      border: 1px solid #E4EBF7;
+      background: var(--white);
+      transition: background 0.22s, transform 0.18s, box-shadow 0.22s;
+    }
+
+    .goal-item:hover {
+      background: var(--blue-light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .goal-icon {
+      width: 28px; height: 28px;
+      border-radius: 7px;
+      background: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .goal-icon svg { width: 13px; height: 13px; }
+    .goal-item p { font-size: 0.875rem; color: var(--gray-700); line-height: 1.55; font-weight: 500; }
+
+    /* ── TARGET USERS ── */
+    .users-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(14px, 2.5vw, 24px);
+      margin-top: 24px;
+    }
+
+    @media (max-width: 600px) { .users-grid { grid-template-columns: 1fr; gap: 16px; } }
+
+    .user-card {
+      padding: clamp(18px, 2.5vw, 24px);
+      border-radius: var(--radius);
+      background: var(--white);
+      border: 1px solid #E4EBF7;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.25s, transform 0.2s, border-color 0.25s, background 0.25s;
+    }
+
+    .user-card:hover {
+      background: var(--blue-light);
+      border-color: rgba(30,111,232,0.2);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .user-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--blue-mid);
+    }
+
+    .user-avatar {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .user-avatar svg { width: 22px; height: 22px; }
+
+    .user-card-header h3 {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+
+    .user-card-header span {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--blue);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .user-access-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-500);
+      margin-bottom: 8px;
+    }
+
+    .user-features { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+
+    .user-features li {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 0.85rem;
+      color: var(--gray-700);
+    }
+
+    .user-features li::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+    }
+
+    /* ── IMAGE SECTION — CORE FIXES ── */
+    .img-section {
+      margin-top: clamp(16px, 3vw, 32px);
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* Screenshot containers — bounded, clean */
+    .img-frame {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--gray-100);
+      border: 1px solid rgba(30,111,232,0.10);
+      box-shadow: var(--shadow-md);
+      width: 100%;
+      /* KEY FIX: constrain tall screenshots */
+      max-height: 440px;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .img-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-height: 440px;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    /* Grid frames are shorter */
+    .img-grid-2 .img-frame {
+      max-height: 300px;
+    }
+
+    .img-grid-2 .img-frame img {
+      max-height: 300px;
+    }
+
+    /* OLD placeholder — kept for backward compat but styled tightly */
+    .img-placeholder {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--gray-100);
+      border: 1px solid rgba(30,111,232,0.10);
+      box-shadow: var(--shadow-md);
+      width: 100%;
+      /* Wraps content — no blank oversized cards */
+      display: inline-block;
+    }
+
+    .img-placeholder img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 440px;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .img-placeholder-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: clamp(24px, 4vw, 48px);
+      text-align: center;
+    }
+
+    .img-placeholder-inner p { font-size: 0.875rem; color: var(--gray-500); }
+    .img-placeholder-inner code { font-size: 0.78rem; background: var(--white); padding: 3px 10px; border-radius: 6px; color: var(--blue); border: 1px solid var(--blue-mid); }
+
+    /* 2-up image grid */
+    .img-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: clamp(12px, 2vw, 20px);
+      width: 100%;
+    }
+
+    /* Grid placeholder shorter */
+    .img-grid-2 .img-placeholder img {
+      max-height: 300px;
+    }
+
+    @media (max-width: 640px) {
+      .img-grid-2 { grid-template-columns: 1fr; }
+      .img-frame { max-height: 280px; }
+      .img-frame img { max-height: 280px; }
+      .img-grid-2 .img-frame,
+      .img-grid-2 .img-placeholder img { max-height: 240px; }
+    }
+
+    /* ── FEATURE TABS ── */
+    .features-tabs { margin-top: 24px; }
+
+    .tab-nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .tab-btn {
+      padding: 7px 18px;
+      border-radius: 50px;
+      border: 1.5px solid var(--gray-300);
+      background: var(--white);
+      color: var(--gray-500);
+      font-size: 0.84rem;
+      font-weight: 500;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: all 0.22s;
+    }
+
+    .tab-btn:hover, .tab-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: var(--white);
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .feature-list-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+      gap: 10px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: clamp(12px, 1.8vw, 16px);
+      border-radius: var(--radius-sm);
+      background: var(--gray-100);
+      border: 1px solid transparent;
+      transition: all 0.22s;
+    }
+
+    .feature-item:hover {
+      background: var(--blue-light);
+      border-color: rgba(30,111,232,0.15);
+      transform: translateY(-2px);
+    }
+
+    .feat-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    .feature-item p { font-size: 0.84rem; color: var(--gray-700); line-height: 1.5; font-weight: 500; }
+
+    /* ── DESIGN PROCESS ── */
+    .process-timeline {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 24px;
+      padding-left: 28px;
+    }
+
+    .process-timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px; top: 14px; bottom: 14px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--blue), var(--blue-mid));
+      border-radius: 2px;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 0 0 24px 20px;
+    }
+
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-dot {
+      position: absolute;
+      left: -19px; top: 4px;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: 3px solid var(--white);
+      box-shadow: 0 0 0 2px var(--blue);
+    }
+
+    .timeline-content {
+      background: var(--white);
+      border: 1px solid #E4EBF7;
+      border-radius: var(--radius);
+      padding: clamp(14px, 2vw, 20px);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.22s, transform 0.2s, background 0.22s, border-color 0.22s;
+    }
+
+    .timeline-content:hover {
+      background: var(--blue-light);
+      border-color: rgba(30,111,232,0.2);
+      box-shadow: var(--shadow-md);
+      transform: translateX(4px);
+    }
+
+    .timeline-content h4 {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+
+    .timeline-content p { font-size: 0.875rem; color: var(--gray-700); line-height: 1.65; }
+
+    .timeline-content ul { margin-top: 8px; list-style: none; display: flex; flex-direction: column; gap: 5px; }
+
+    .timeline-content ul li { font-size: 0.84rem; color: var(--gray-600, #555); display: flex; gap: 8px; align-items: flex-start; }
+
+    .timeline-content ul li::before { content: '→'; color: var(--blue); flex-shrink: 0; font-size: 0.78rem; margin-top: 2px; }
+
+    /* ── CHALLENGES ── */
+    .challenges-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .challenge-card {
+      padding: clamp(16px, 2.5vw, 22px);
+      border-radius: var(--radius);
+      background: var(--white);
+      border: 1px solid #E4EBF7;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s;
+    }
+
+    .challenge-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--blue);
+      border-radius: 4px 0 0 4px;
+    }
+
+    .challenge-card:hover {
+      background: var(--blue-light);
+      border-color: rgba(30,111,232,0.2);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .challenge-card h4 {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 8px;
+    }
+
+    .challenge-card p { font-size: 0.84rem; color: var(--gray-500); line-height: 1.65; }
+
+    /* ── OUTCOMES ── */
+    .outcomes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .outcome-card {
+      padding: clamp(16px, 2vw, 22px);
+      border-radius: var(--radius);
+      background: var(--blue);
+      color: var(--white);
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.2s, box-shadow 0.22s;
+    }
+
+    .outcome-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+    .outcome-num {
+      font-family: var(--font-heading);
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .outcome-card p { font-size: 0.84rem; opacity: 0.85; line-height: 1.45; }
+
+    /* ── LEARNINGS ── */
+    .learnings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .learning-item {
+      display: flex;
+      gap: 14px;
+      padding: clamp(14px, 2vw, 18px);
+      border-radius: var(--radius);
+      background: var(--white);
+      border: 1px solid #E4EBF7;
+      box-shadow: var(--shadow-sm);
+      align-items: flex-start;
+      transition: all 0.22s;
+    }
+
+    .learning-item:hover {
+      background: var(--blue-light);
+      border-color: rgba(30,111,232,0.18);
+      box-shadow: var(--shadow-md);
+      transform: translateX(6px);
+    }
+
+    .learning-num {
+      min-width: 30px; height: 30px;
+      border-radius: 7px;
+      background: var(--blue-light);
+      border: 1.5px solid var(--blue-mid);
+      color: var(--blue);
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .learning-item p { font-size: 0.875rem; color: var(--gray-700); line-height: 1.65; }
+
+    /* ── TOOLS & TECH ── */
+    .tools-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .tool-pill {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      border-radius: 50px;
+      background: var(--white);
+      border: 1.5px solid #E4EBF7;
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--gray-700);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.22s;
+    }
+
+    .tool-pill:hover {
+      background: var(--blue-light);
+      border-color: var(--blue);
+      color: var(--blue);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .tool-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: clamp(24px, 3.5vw, 40px) 0;
+      border-top: 1px solid #EEF2F9;
+      text-align: center;
+    }
+
+    footer p { font-size: 0.84rem; color: var(--gray-500); }
+    footer span { color: var(--blue); font-weight: 600; }
+
+    /* ── FADE IN ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── INLINE LIST ── */
+    .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+    .bullet-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      font-size: 0.875rem;
+      color: var(--gray-700);
+      line-height: 1.65;
+    }
+
+    .bullet-list li::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+      margin-top: 8px;
+    }
+
+    /* ── CHALLENGE STATEMENT BOX ── */
+    .statement-box {
+      padding: clamp(20px, 3vw, 32px);
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, #1E6FE8 0%, #1558C7 100%);
+      color: var(--white);
+      margin-top: 24px;
+    }
+
+    .statement-box p {
+      font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+      line-height: 1.7;
+      opacity: 0.92;
+    }
+
+    .statement-box strong { font-weight: 700; opacity: 1; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--white); }
+    ::-webkit-scrollbar-thumb { background: var(--blue-mid); border-radius: 6px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--blue); }
+
+    /* ── RESPONSIVE MOBILE ── */
+    @media (max-width: 480px) {
+      section { padding: 24px 0; }
+
+      .hero { padding: 72px 0 28px; }
+      .hero h1 { font-size: 1.7rem; }
+      .section-title { font-size: 1.25rem; }
+
+      .cover-img-wrap { max-height: 220px; }
+      .cover-img-wrap img { max-height: 220px; }
+
+      .img-frame { max-height: 220px; }
+      .img-frame img { max-height: 220px; }
+
+      .img-placeholder img { max-height: 220px; }
+
+      .process-timeline { padding-left: 22px; }
+
+      .approach-step { gap: 10px; }
+      .step-num { min-width: 28px; height: 28px; font-size: 0.7rem; }
+
+      .two-col { grid-template-columns: 1fr; }
+      .role-layout { grid-template-columns: 1fr; }
+      .users-grid { grid-template-columns: 1fr; }
+      .img-grid-2 { grid-template-columns: 1fr; }
+
+      .container { padding: 0 14px; }
+    }
+
+    @media (max-width: 768px) {
+      .cover-image-section { padding: 0 14px; }
+    }
+
+    /* ── TABLET ── */
+    @media (min-width: 481px) and (max-width: 900px) {
+      .overview-grid { grid-template-columns: 1fr 1fr; }
+      .problem-grid { grid-template-columns: 1fr 1fr; }
+      .challenges-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── BACK BUTTON ── -->
+  <div class="back-wrap">
+    <a href="./index.html" class="back-btn-desktop" aria-label="Back to portfolio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back
+    </a>
+    <a href="./index.html" class="back-btn-mobile" aria-label="Back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+    </a>
+  </div>
+
+  <!-- ── HERO ── -->
+  <header class="hero" role="banner">
+    <div class="container">
+      <div class="hero-inner fade-in">
+        <div class="hero-tag"><span></span> UI/UX Case Study</div>
+        <h1>Digital Agency<br/><em>Dashboard</em></h1>
+        <p class="hero-sub">AI-Assisted Admin &amp; Employee Management Dashboard — a complete internal platform designed for digital agency operations.</p>
+        <div class="hero-meta">
+          <span class="hero-meta-pill">Dashboard Design</span>
+          <span class="hero-meta-pill">Admin Panel</span>
+          <span class="hero-meta-pill">AI-Assisted</span>
+          <span class="hero-meta-pill">UI/UX</span>
+          <span class="hero-meta-pill">2026</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── COVER IMAGE ── -->
+  <div class="cover-image-section">
+    <div class="container">
+      <div class="cover-img-wrap fade-in">
+        <div class="cover-img-placeholder">
+          <img src="./Dashboard Digital/dashboard mockup.webp" alt="Dashboard Mockup" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ── CONFIDENTIALITY NOTICE ── -->
+    <section aria-labelledby="conf-title">
+      <div class="container fade-in">
+        <p class="section-label">Notice</p>
+        <div class="notice-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E6FE8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <p>Due to client confidentiality and privacy agreements, the client name, sensitive business information, and certain identifying details have been intentionally hidden or modified within this case study. The focus of this presentation is on the design process, dashboard structure, workflow thinking, and UI/UX execution rather than revealing confidential client data.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PROJECT OVERVIEW ── -->
+    <section aria-labelledby="overview-title">
+      <div class="container fade-in">
+        <p class="section-label">Project Overview</p>
+        <h2 class="section-title" id="overview-title">About This Project</h2>
+        <p class="section-body">This project is a fully functional AI-assisted dashboard system designed for a digital agency. The platform includes two separate dashboards — an Employee Dashboard and an Admin Dashboard — built to create a clean, efficient, and scalable internal management system.</p>
+        <div class="overview-grid">
+          <div class="overview-card">
+            <h3>Employee Dashboard</h3>
+            <p>A focused interface giving employees quick access to attendance, tasks, timesheets, leave requests, payslips, and profile management tools.</p>
+          </div>
+          <div class="overview-card">
+            <h3>Admin Dashboard</h3>
+            <p>A comprehensive control panel for management teams covering employee management, client tracking, project monitoring, and operational reporting.</p>
+          </div>
+          <div class="overview-card">
+            <h3>AI-Assisted Workflow</h3>
+            <p>The project leverages AI-assisted generation with extensive human-led ideation, prompt engineering, iteration cycles, and usability-driven refinements.</p>
+          </div>
+          <div class="overview-card">
+            <h3>Scalable Architecture</h3>
+            <p>Designed with a modular structure to allow future feature expansion, additional integrations, and seamless scaling as the agency grows.</p>
+          </div>
+        </div>
+        <p class="section-body" style="margin-top: 20px;">This project demonstrates how AI-assisted workflows can be strategically used in modern UI/UX and product design processes — transforming generated outputs into purposeful, agency-oriented management platforms through continuous direction and refinement.</p>
+      </div>
+    </section>
+
+    <!-- ── PROJECT TYPE ── -->
+    <section aria-labelledby="type-title">
+      <div class="container fade-in">
+        <p class="section-label">Classification</p>
+        <h2 class="section-title" id="type-title">Project Type</h2>
+        <div class="type-tags">
+          <span class="type-tag">Dashboard Design</span>
+          <span class="type-tag">Admin Panel System</span>
+          <span class="type-tag">Employee Management Platform</span>
+          <span class="type-tag">AI-Assisted Product Design</span>
+          <span class="type-tag">UI/UX Case Study</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── MY ROLE ── -->
+    <section aria-labelledby="role-title">
+      <div class="container fade-in">
+        <p class="section-label">My Role</p>
+        <h2 class="section-title" id="role-title">UI/UX Designer &amp; AI Workflow Director</h2>
+        <p class="section-body">This project required a combination of strategic design thinking, AI direction capabilities, and traditional UI/UX execution. My responsibilities spanned the full product design lifecycle.</p>
+        <div class="role-layout">
+          <div class="role-card">
+            <h3>Design &amp; Direction</h3>
+            <ul class="role-list">
+              <li>Prompt engineering and AI direction</li>
+              <li>Feature planning and dashboard structuring</li>
+              <li>User flow planning and architecture</li>
+              <li>Brand identity alignment</li>
+              <li>Visual hierarchy improvements</li>
+              <li>Design consistency validation</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <h3>Refinement &amp; Optimization</h3>
+            <ul class="role-list">
+              <li>Layout refinement and iteration cycles</li>
+              <li>Usability-focused modifications</li>
+              <li>Dashboard optimization based on workflow logic</li>
+              <li>UX-driven restructuring</li>
+              <li>Practical feature organization</li>
+              <li>Brand-based customization</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── DESIGN APPROACH ── -->
+    <section aria-labelledby="approach-title">
+      <div class="container fade-in">
+        <p class="section-label">Methodology</p>
+        <h2 class="section-title" id="approach-title">Design Approach</h2>
+        <p class="section-body">The project was created using a hybrid workflow — an AI + Human Collaboration Process. The base dashboard layouts and components were generated using AI-assisted tools, while overall product direction, feature structure, design refinement, and user experience decisions were guided manually.</p>
+        <div class="approach-steps">
+          <div class="approach-step">
+            <div class="step-num">01</div>
+            <p><strong>Multiple Iteration Cycles</strong> — Rather than accepting initial AI-generated outputs, every screen went through structured iteration rounds to align with actual agency workflows and user needs.</p>
+          </div>
+          <div class="approach-step">
+            <div class="step-num">02</div>
+            <p><strong>Continuous Prompt Refinement</strong> — Prompts were strategically refined at each stage to push AI outputs closer to the intended design vision, ensuring purposeful and accurate generation.</p>
+          </div>
+          <div class="approach-step">
+            <div class="step-num">03</div>
+            <p><strong>Workflow Optimization</strong> — Every design decision was evaluated against real operational workflows, ensuring the dashboard reduces friction rather than adding complexity.</p>
+          </div>
+          <div class="approach-step">
+            <div class="step-num">04</div>
+            <p><strong>Brand-Based Customization</strong> — Visual language, color systems, typography choices, and component styles were refined to reflect a cohesive and professional agency brand identity.</p>
+          </div>
+          <div class="approach-step">
+            <div class="step-num">05</div>
+            <p><strong>UX-Driven Restructuring</strong> — Information architecture was continuously restructured based on user behavior patterns, task frequency, and accessibility of critical data points.</p>
+          </div>
+          <div class="approach-step">
+            <div class="step-num">06</div>
+            <p><strong>Practical Feature Organization</strong> — Features were grouped, prioritized, and organized based on actual agency operational needs rather than generic dashboard templates.</p>
+          </div>
+        </div>
+        <p class="section-body" style="margin-top: 20px;">This methodology helped transform generic AI-generated screens into a more purposeful and agency-oriented management platform with clear functional intent.</p>
+      </div>
+    </section>
+
+    <!-- ── PROBLEM STATEMENT ── -->
+    <section aria-labelledby="problem-title">
+      <div class="container fade-in">
+        <p class="section-label">Problem Statement</p>
+        <h2 class="section-title" id="problem-title">Challenges Digital Agencies Face</h2>
+        <p class="section-body">Digital agencies often struggle with a range of operational inefficiencies that slow down productivity, create management blind spots, and result in poor employee experience. Most available dashboard systems either feel overly complicated or visually outdated.</p>
+        <div class="problem-grid">
+          <div class="problem-card">
+            <div class="icon">👥</div>
+            <h4>Employee Management</h4>
+            <p>Managing employee data, performance, and workflows efficiently across departments and teams.</p>
+          </div>
+          <div class="problem-card">
+            <div class="icon">⏱️</div>
+            <h4>Attendance &amp; Hours</h4>
+            <p>Accurately tracking attendance records, work hours, and time entries with minimal friction.</p>
+          </div>
+          <div class="problem-card">
+            <div class="icon">📊</div>
+            <h4>Project Progress</h4>
+            <p>Monitoring project milestones, deliverable statuses, and team performance in real time.</p>
+          </div>
+          <div class="problem-card">
+            <div class="icon">💬</div>
+            <h4>Internal Communication</h4>
+            <p>Organizing internal messaging, task discussions, and cross-team collaboration effectively.</p>
+          </div>
+          <div class="problem-card">
+            <div class="icon">📁</div>
+            <h4>Client &amp; Project Data</h4>
+            <p>Handling sensitive client information, project records, and deliverable tracking securely.</p>
+          </div>
+          <div class="problem-card">
+            <div class="icon">🔍</div>
+            <h4>Operational Transparency</h4>
+            <p>Maintaining visibility across operations for management without micromanaging individual contributors.</p>
+          </div>
+        </div>
+        <div class="statement-box">
+          <p><strong>The Challenge:</strong> Design a dashboard system that feels modern and intuitive, simplifies daily operations, improves accessibility of information, reduces management friction, and creates a professional digital workspace for the entire team.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── GOAL ── -->
+    <section aria-labelledby="goal-title">
+      <div class="container fade-in">
+        <p class="section-label">Objective</p>
+        <h2 class="section-title" id="goal-title">Project Goal</h2>
+        <p class="section-body">The goal of the project was to design and deliver a comprehensive, well-structured, and visually strong management system that serves both employees and administrators effectively.</p>
+        <div class="goal-list">
+          <div class="goal-item">
+            <div class="goal-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p>A clean and modern agency dashboard</p>
+          </div>
+          <div class="goal-item">
+            <div class="goal-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p>An organized workflow management system</p>
+          </div>
+          <div class="goal-item">
+            <div class="goal-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p>Separate, tailored experiences for admins and employees</p>
+          </div>
+          <div class="goal-item">
+            <div class="goal-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p>A visually strong yet fully functional interface</p>
+          </div>
+          <div class="goal-item">
+            <div class="goal-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p>A scalable structure ready for future expansion</p>
+          </div>
+          <div class="goal-item">
+            <div class="goal-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p>Better information hierarchy and navigation systems</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TARGET USERS ── -->
+    <section aria-labelledby="users-title">
+      <div class="container fade-in">
+        <p class="section-label">Target Audience</p>
+        <h2 class="section-title" id="users-title">Target Users</h2>
+        <p class="section-body">The platform serves two distinct user types, each with specific needs, different access levels, and unique workflow requirements. Both experiences were designed independently with their own navigation patterns and feature sets.</p>
+        <div class="users-grid">
+          <div class="user-card">
+            <div class="user-card-header">
+              <div class="user-avatar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div>
+                <h3>Employee Users</h3>
+                <span>Standard Access Level</span>
+              </div>
+            </div>
+            <p class="user-access-label">Quick Access To</p>
+            <ul class="user-features">
+              <li>Attendance tracking &amp; records</li>
+              <li>Tasks &amp; to-do management</li>
+              <li>Timesheets &amp; hour logging</li>
+              <li>Leave requests &amp; approval status</li>
+              <li>Payslips &amp; payment history</li>
+              <li>Profile management &amp; settings</li>
+            </ul>
+          </div>
+          <div class="user-card">
+            <div class="user-card-header">
+              <div class="user-avatar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div>
+                <h3>Admin Users</h3>
+                <span>Full Management Access</span>
+              </div>
+            </div>
+            <p class="user-access-label">Management Controls</p>
+            <ul class="user-features">
+              <li>Employee management &amp; oversight</li>
+              <li>Client management &amp; relationship tracking</li>
+              <li>Project tracking &amp; milestone monitoring</li>
+              <li>Task allocation &amp; assignment</li>
+              <li>Report monitoring &amp; analytics</li>
+              <li>Overall operational control panel</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── DASHBOARD FEATURES ── -->
+    <section aria-labelledby="features-title">
+      <div class="container fade-in">
+        <p class="section-label">Features</p>
+        <h2 class="section-title" id="features-title">Dashboard Feature Set</h2>
+        <p class="section-body">Both dashboards were built with a comprehensive and practical set of features tailored to the specific workflows and responsibilities of each user type.</p>
+        <div class="features-tabs">
+          <div class="tab-nav" role="tablist" aria-label="Dashboard features">
+            <button class="tab-btn active" role="tab" aria-selected="true" data-tab="employee">Employee Dashboard</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-tab="admin">Admin Dashboard</button>
+          </div>
+          <div class="tab-panel active" id="tab-employee" role="tabpanel">
+            <div class="feature-list-grid">
+              <div class="feature-item"><div class="feat-dot"></div><p>Dashboard Overview &amp; Summary</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Attendance Check-In / Check-Out</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Daily Task List &amp; Management</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Timesheet Logging &amp; History</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Leave Application &amp; Status</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Payslip Viewing &amp; Download</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Profile &amp; Settings Management</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Project Assignment View</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Notifications &amp; Alerts</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Work Hours Summary</p></div>
+            </div>
+          </div>
+          <div class="tab-panel" id="tab-admin" role="tabpanel">
+            <div class="feature-list-grid">
+              <div class="feature-item"><div class="feat-dot"></div><p>Admin Overview Dashboard</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Employee Directory &amp; Management</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Client Database &amp; CRM</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Project Tracking &amp; Status</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Task Allocation &amp; Assignment</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Attendance &amp; Leave Approvals</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Payroll &amp; Salary Management</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Reports &amp; Analytics</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Role &amp; Permission Management</p></div>
+              <div class="feature-item"><div class="feat-dot"></div><p>Operational Notifications</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── DESIGN PROCESS ── -->
+    <section aria-labelledby="process-title">
+      <div class="container fade-in">
+        <p class="section-label">Design Process</p>
+        <h2 class="section-title" id="process-title">How We Got There</h2>
+        <p class="section-body">The design followed a structured five-phase process that combined strategic planning with AI-assisted generation and extensive human refinement to deliver a purposeful, well-crafted product.</p>
+        <div class="process-timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h4>Phase 01 — Research &amp; Planning</h4>
+              <p>Understanding the agency's operational requirements, team structure, and management challenges before any design work began.</p>
+              <ul>
+                <li>Agency workflow analysis</li>
+                <li>Feature requirement mapping</li>
+                <li>Information architecture planning</li>
+                <li>Workflow and navigation structure</li>
+              </ul>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h4>Phase 02 — AI-Assisted Generation</h4>
+              <p>Using AI tools with strategic prompts to generate initial dashboard layouts, component structures, and screen variations as a fast starting point for the design system.</p>
+              <ul>
+                <li>Prompt engineering for accurate outputs</li>
+                <li>Initial layout generation</li>
+                <li>Component library starting point</li>
+                <li>Multiple variation exploration</li>
+              </ul>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h4>Phase 03 — Design Refinement</h4>
+              <p>Extensively reviewing and refining the AI-generated outputs to align with the agency's brand, operational needs, and user experience standards through manual design work.</p>
+              <ul>
+                <li>Visual hierarchy refinement</li>
+                <li>Typography and color system alignment</li>
+                <li>Component consistency review</li>
+                <li>Brand identity integration</li>
+              </ul>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h4>Phase 04 — UX Optimization</h4>
+              <p>Restructuring information architecture based on user workflows, simplifying navigation patterns, and optimizing every screen for daily usability and operational efficiency.</p>
+              <ul>
+                <li>Navigation structure optimization</li>
+                <li>Task flow simplification</li>
+                <li>Content hierarchy restructuring</li>
+                <li>Accessibility and clarity improvements</li>
+              </ul>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h4>Phase 05 — Iteration &amp; Validation</h4>
+              <p>Running multiple iteration cycles across both dashboards to validate design decisions, test layout effectiveness, and ensure consistency across all screens and user flows.</p>
+              <ul>
+                <li>Cross-screen consistency checks</li>
+                <li>Layout effectiveness validation</li>
+                <li>Feature completeness review</li>
+                <li>Final design polish and cleanup</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── DASHBOARD SCREENS IMAGE SECTION ── -->
+    <section aria-labelledby="screens-title">
+      <div class="container fade-in">
+        <p class="section-label">Screens</p>
+        <h2 class="section-title" id="screens-title">Dashboard Screens</h2>
+        <p class="section-body">Key screens from both the Employee and Admin dashboards showcasing the interface design, layout structure, and visual system applied across the platform.</p>
+
+        <!-- Employee Dashboard — full width -->
+        <div class="img-section">
+          <div class="img-frame">
+            <img src="./Dashboard Digital/Dashboard employee edit.webp" alt="Employee Dashboard Overview" loading="lazy" />
+          </div>
+        </div>
+
+        <!-- Employee sub-screens — 2 up -->
+        <div class="img-grid-2">
+          <div class="img-frame">
+            <img src="./Dashboard Digital/attendace employee edit.webp" alt="Employee Attendance" loading="lazy" />
+          </div>
+          <div class="img-frame">
+            <img src="./Dashboard Digital/task assigned employee edit.webp" alt="Employee Tasks" loading="lazy" />
+          </div>
+        </div>
+
+        <!-- Admin Dashboard — full width -->
+        <div class="img-section" style="margin-top: 16px;">
+          <div class="img-frame">
+            <img src="./Dashboard Digital/dashboard admin edit.webp" alt="Admin Dashboard Overview" loading="lazy" />
+          </div>
+        </div>
+
+        <!-- Admin sub-screens — 2 up -->
+        <div class="img-grid-2">
+          <div class="img-frame">
+            <img src="./Dashboard Digital/employee admin edit.webp" alt="Admin Employee Management" loading="lazy" />
+          </div>
+          <div class="img-frame">
+            <img src="./Dashboard Digital/projects admin edit.webp" alt="Admin Project Tracking" loading="lazy" />
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── CHALLENGES ── -->
+    <section aria-labelledby="challenges-title">
+      <div class="container fade-in">
+        <p class="section-label">Challenges</p>
+        <h2 class="section-title" id="challenges-title">Design Challenges</h2>
+        <p class="section-body">This project came with a distinct set of challenges that required careful thinking, strategic decision-making, and iterative problem-solving throughout the design process.</p>
+        <div class="challenges-grid">
+          <div class="challenge-card">
+            <h4>Dual Dashboard Coherence</h4>
+            <p>Designing two separate dashboards — Employee and Admin — that feel visually consistent with each other while maintaining distinct navigation patterns, feature sets, and interaction models appropriate to each user role.</p>
+          </div>
+          <div class="challenge-card">
+            <h4>AI Output Refinement</h4>
+            <p>Transforming AI-generated screens — which often produce generic, template-like outputs — into purposeful, agency-specific interfaces required sustained creative direction and multiple iteration cycles.</p>
+          </div>
+          <div class="challenge-card">
+            <h4>Information Density Balance</h4>
+            <p>Admin dashboards naturally carry high information density. Finding the balance between showing comprehensive data and maintaining a clean, non-overwhelming visual experience was a core UX challenge.</p>
+          </div>
+          <div class="challenge-card">
+            <h4>Scalable Structure Design</h4>
+            <p>Designing the system to be scalable for future features and modules — without adding unnecessary complexity to the current interface or disrupting the established navigation and layout patterns.</p>
+          </div>
+          <div class="challenge-card">
+            <h4>Role-Based Experience Design</h4>
+            <p>Ensuring that the differences between Employee and Admin experiences feel natural and purposeful rather than artificially restricted, with each role having access to exactly what they need.</p>
+          </div>
+          <div class="challenge-card">
+            <h4>Confidentiality Constraints</h4>
+            <p>Designing and documenting a case study while maintaining client confidentiality — presenting the design process, decisions, and outcomes without revealing protected business information or identifying details.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── VISUAL DESIGN SECTION ── -->
+    <section aria-labelledby="visual-title">
+      <div class="container fade-in">
+        <p class="section-label">Visual Design</p>
+        <h2 class="section-title" id="visual-title">UI Design Decisions</h2>
+        <p class="section-body">The visual language of the dashboard system was deliberately crafted to feel professional, modern, and agency-grade — avoiding the generic aesthetic often associated with default admin panels.</p>
+        <div class="two-col">
+          <div>
+            <div class="role-card" style="margin-bottom: 14px;">
+              <h3>Color System</h3>
+              <ul class="bullet-list">
+                <li>Primary brand blue for key actions and navigation</li>
+                <li>Clean white backgrounds for readability</li>
+                <li>Subtle grays for secondary content and borders</li>
+                <li>Soft accent tones for status indicators</li>
+              </ul>
+            </div>
+            <div class="role-card">
+              <h3>Typography Hierarchy</h3>
+              <ul class="bullet-list">
+                <li>Clear heading levels for content navigation</li>
+                <li>Distinct body text sizing for readability</li>
+                <li>Label styles for metadata and table content</li>
+                <li>Consistent weight usage across components</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <div class="role-card" style="margin-bottom: 14px;">
+              <h3>Component Design</h3>
+              <ul class="bullet-list">
+                <li>Consistent border radius across all UI elements</li>
+                <li>Subtle shadow system for depth and hierarchy</li>
+                <li>Hover states communicating interactive affordance</li>
+                <li>Clear button hierarchy (primary, secondary, ghost)</li>
+              </ul>
+            </div>
+            <div class="role-card">
+              <h3>Layout Principles</h3>
+              <ul class="bullet-list">
+                <li>Fixed sidebar navigation for persistent wayfinding</li>
+                <li>Content area designed with generous breathing room</li>
+                <li>Card-based information grouping for clarity</li>
+                <li>Consistent grid system across all screen types</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="img-section">
+          <div class="img-frame">
+            <img src="./Dashboard Digital/ui component dashboard.webp" alt="UI Component Design Sheet" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TOOLS & TECHNOLOGY ── -->
+    <section aria-labelledby="tools-title">
+      <div class="container fade-in">
+        <p class="section-label">Stack</p>
+        <h2 class="section-title" id="tools-title">Tools &amp; Technology</h2>
+        <p class="section-body">The project utilized a combination of design tools, AI-assisted platforms, and development technologies to bring the dashboard system to life efficiently and effectively.</p>
+        <div class="tools-grid">
+          <span class="tool-pill"><span class="tool-dot"></span>Figma</span>
+          <span class="tool-pill"><span class="tool-dot"></span>AI Design Tools</span>
+          <span class="tool-pill"><span class="tool-dot"></span>Prompt Engineering</span>
+          <span class="tool-pill"><span class="tool-dot"></span>HTML / CSS</span>
+          <span class="tool-pill"><span class="tool-dot"></span>JavaScript</span>
+          <span class="tool-pill"><span class="tool-dot"></span>Responsive Design</span>
+          <span class="tool-pill"><span class="tool-dot"></span>Component Systems</span>
+          <span class="tool-pill"><span class="tool-dot"></span>UI Prototyping</span>
+          <span class="tool-pill"><span class="tool-dot"></span>User Flow Mapping</span>
+          <span class="tool-pill"><span class="tool-dot"></span>Design Systems</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── KEY LEARNINGS ── -->
+    <section aria-labelledby="learnings-title">
+      <div class="container fade-in">
+        <p class="section-label">Learnings</p>
+        <h2 class="section-title" id="learnings-title">Key Learnings</h2>
+        <p class="section-body">This project offered valuable insights into AI-assisted design workflows, the importance of human direction in AI product development, and the complexities of designing dual-role management systems.</p>
+        <div class="learnings-list">
+          <div class="learning-item">
+            <div class="learning-num">01</div>
+            <p><strong>AI is a starting point, not an endpoint.</strong> While AI tools can dramatically accelerate initial generation and exploration, the quality of the final product depends entirely on the quality and persistence of human direction, iteration, and creative refinement applied after generation.</p>
+          </div>
+          <div class="learning-item">
+            <div class="learning-num">02</div>
+            <p><strong>Prompt engineering is a design skill.</strong> The ability to craft precise, context-rich, and strategically sequenced prompts is as important as traditional design execution when working in AI-assisted workflows. Poor prompting leads to generic outputs regardless of the tool being used.</p>
+          </div>
+          <div class="learning-item">
+            <div class="learning-num">03</div>
+            <p><strong>Role-based UX requires deep empathy.</strong> Designing for two fundamentally different user types — employees and admins — requires genuine understanding of their daily workflows, priorities, pain points, and mental models, rather than simply restricting or expanding feature access.</p>
+          </div>
+          <div class="learning-item">
+            <div class="learning-num">04</div>
+            <p><strong>Information hierarchy is the core challenge in dashboards.</strong> The most critical skill in dashboard design is deciding what information appears at what level of prominence — not the visual aesthetics. Getting hierarchy wrong makes even beautiful dashboards frustrating to use.</p>
+          </div>
+          <div class="learning-item">
+            <div class="learning-num">05</div>
+            <p><strong>Scalability must be designed in from the beginning.</strong> Building layout systems, navigation patterns, and component structures that can accommodate future features without requiring redesign from scratch is a far more efficient approach than retrofitting scalability later.</p>
+          </div>
+          <div class="learning-item">
+            <div class="learning-num">06</div>
+            <p><strong>Consistency is more valuable than novelty in utility interfaces.</strong> For internal management tools, consistent interaction patterns and predictable navigation structures create more value for users than creative or experimental design choices that break expected conventions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL SCREENS SECTION REMOVED AS REQUESTED -->
+
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="container">
+      <p>© <span>Shabnam</span> 2026 Digital Agency Dashboard Case Study</p>
+    </div>
+  </footer>
+
+  <script>
+    // ── FADE IN ON SCROLL ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -32px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ── TABS ──
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tab;
+        tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+        tabPanels.forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        document.getElementById('tab-' + target).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
